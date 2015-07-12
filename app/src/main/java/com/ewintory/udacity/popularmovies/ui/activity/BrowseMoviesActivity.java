@@ -3,6 +3,7 @@ package com.ewintory.udacity.popularmovies.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,8 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
 
         if (savedInstanceState != null)
             mSort = (Sort) savedInstanceState.getSerializable(STATE_SORT);
+
+        Log.d(TAG, "Sort=" + mSort);
 
         mMoviesFragment.reloadMovies(mSort);
     }
@@ -78,7 +81,8 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
     }
 
     private void onSortChanged(@NonNull Sort sort) {
-        mMoviesFragment.reloadMovies(sort);
+        mSort = sort;
+        mMoviesFragment.reloadMovies(mSort);
         mMoviesFragment.scrollToTop();
     }
 }
