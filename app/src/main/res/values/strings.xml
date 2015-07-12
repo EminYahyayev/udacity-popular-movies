@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
+    <string name="app_name" translatable="false">Popular Movies</string>
     <string name="__leak_canary_display_activity_label" translatable="false">Popular Movies Leaks</string>
 
     <!-- Screen titles -->
@@ -19,6 +19,5 @@
 
     <!-- Movie details -->
     <string name="movie_details_rating">Rating: %1$s</string>
-    <string name="movie_details_duration">Rating: %1$s</string>
 
 </resources>
