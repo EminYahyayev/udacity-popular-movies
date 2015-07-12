@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="body_text_1">#de000000</color>
+    <color name="body_text_2">#8a000000</color>
+    <color name="body_text_3">#60000000</color>
+    <color name="body_text_white">#FFFFFFFF</color>
+    <color name="body_text_disabled">#44000000</color>
+
+    <color name="body_text_1_inverse">#deffffff</color>
+    <color name="body_text_2_inverse">#8affffff</color>
+
+    <color name="theme_primary">#009688</color>
+    <color name="theme_primary_dark">#00796B</color>
+    <color name="theme_primary_light">#B2DFDB</color>
+
+    <color name="theme_accent_1">#00E5FF</color>
+
+
+    <color name="movie_image_placeholder">@color/theme_primary_light</color>
+
+</resources>

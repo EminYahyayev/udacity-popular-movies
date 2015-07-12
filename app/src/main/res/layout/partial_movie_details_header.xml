@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorPrimary"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/keyline_1"
+    tools:showIn="@layout/activity_movie_details">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginEnd="@dimen/keyline_1"
+        android:layout_marginLeft="@dimen/keyline_2"
+        android:layout_marginRight="@dimen/keyline_1"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
+        android:maxLines="2"
+        android:textColor="@color/body_text_1_inverse"
+        android:textSize="@dimen/text_size_xlarge"
+        android:textStyle="normal"
+        tools:text="@string/placeholder_movie_title" />
+
+    <TextView
+        android:id="@+id/movie_release_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginEnd="@dimen/keyline_1"
+        android:layout_marginLeft="@dimen/keyline_2"
+        android:layout_marginRight="@dimen/keyline_1"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:textColor="@color/body_text_2_inverse"
+        android:textSize="@dimen/text_size_large"
+        tools:text="2015" />
+
+</LinearLayout>

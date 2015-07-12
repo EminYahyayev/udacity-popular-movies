@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="movie_details_poster_height">240dp</dimen>
+
+</resources>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="__leak_canary_display_activity_label" translatable="false">Popular Movies Leaks</string>
+
+    <!-- Screen titles -->
+    <string name="title_browse_movies">Poplar Movies</string>
+    <string name="title_movie_details">Movie Details</string>
+
+    <!-- Common -->
+    <string name="view_empty_message">No matching items</string>
+    <string name="view_error_message">This content is not available offline. Please tap to retry.</string>
+
+    <!-- Browse Movies-->
+    <string name="movie_image_desc">Movie image</string>
+    <string name="movie_poster_desc">Movie poster</string>
+    <string name="menu_sort">Sorting</string>
+    <string name="menu_sort_popularity">Popularity</string>
+    <string name="menu_sort_rating">Rating</string>
+
+    <!-- Movie details -->
+    <string name="movie_details_rating">Rating: %1$s</string>
+    <string name="movie_details_duration">Rating: %1$s</string>
+
+</resources>
