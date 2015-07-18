@@ -1,13 +1,18 @@
 package com.ewintory.udacity.popularmovies.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.data.model.Video;
 import com.ewintory.udacity.popularmovies.ui.fragment.MovieFragment;
 
 import butterknife.Bind;
@@ -45,7 +50,10 @@ public final class MovieDetailsActivity extends BaseActivity {
 
     private void setMovie(Movie movie) {
         mMovieTitle.setText(movie.getTitle());
-        mReleaseYear.setText(movie.getReleaseDate().substring(0, 4));
+
+        String date = movie.getReleaseDate();
+        if (date != null)
+            mReleaseYear.setText(date.substring(0, 4));
     }
 
 }

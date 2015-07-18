@@ -12,13 +12,23 @@
     <color name="body_text_1_inverse">#deffffff</color>
     <color name="body_text_2_inverse">#8affffff</color>
 
-    <color name="theme_primary">#009688</color>
-    <color name="theme_primary_dark">#00796B</color>
-    <color name="theme_primary_light">#B2DFDB</color>
+    <color name="theme_primary">@color/material_red600</color>
+    <color name="theme_primary_dark">@color/material_red800</color>
+    <color name="theme_primary_light">@color/material_red100</color>
 
-    <color name="theme_accent_1">#00E5FF</color>
+    <color name="theme_accent_1">@color/material_blueA700</color>
 
+    <array name="swipe_progress_colors">
+        <item>@color/material_blue500</item>
+        <item>@color/material_red500</item>
+    </array>
 
-    <color name="movie_image_placeholder">@color/theme_primary_light</color>
+    <color name="window_background">#e9eaed</color>
+    <color name="gray_background">#e4e4e4</color>
+
+    <color name="movie_image_placeholder">@color/material_red500</color>
+
+    <color name="card_selectable_pressed">@color/theme_primary</color>
+    <color name="card_shape_background">#1e000000</color>
 
 </resources>

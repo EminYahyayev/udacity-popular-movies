@@ -1,10 +1,10 @@
-package com.ewintory.udacity.popularmovies.dagger;
+package com.ewintory.udacity.popularmovies.data.api;
 
 import com.ewintory.udacity.popularmovies.BuildConfig;
-import com.ewintory.udacity.popularmovies.data.service.MoviesService;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -27,11 +27,15 @@ public final class ApiModule {
         return Endpoints.newFixedEndpoint(MOVIE_DB_API_URL);
     }
 
-    @Provides @Singleton RestAdapter provideRestAdapter(Endpoint endpoint, OkHttpClient client, Gson gson) {
+    @Provides @Singleton @Named("Api") OkHttpClient provideApiClient(OkHttpClient client) {
+        return client.clone();
+    }
+
+    @Provides @Singleton RestAdapter provideRestAdapter(Endpoint endpoint, @Named("Api") OkHttpClient client, Gson gson) {
         return new RestAdapter.Builder()
                 .setClient(new OkClient(client))
                 .setEndpoint(endpoint)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override public void intercept(RequestFacade request) {
                         request.addQueryParam("api_key", BuildConfig.MOVIE_DB_API_KEY);

@@ -3,7 +3,7 @@
     <string name="__leak_canary_display_activity_label" translatable="false">Popular Movies Leaks</string>
 
     <!-- Screen titles -->
-    <string name="title_browse_movies">Poplar Movies</string>
+    <string name="title_browse_movies">Popular Movies</string>
     <string name="title_movie_details">Movie Details</string>
 
     <!-- Common -->
@@ -14,10 +14,16 @@
     <string name="movie_image_desc">Movie image</string>
     <string name="movie_poster_desc">Movie poster</string>
     <string name="menu_sort">Sorting</string>
-    <string name="menu_sort_popularity">Popularity</string>
-    <string name="menu_sort_rating">Rating</string>
+    <string name="menu_sort_popularity">Most popular</string>
+    <string name="menu_sort_vote_average">Highest rated</string>
+    <string name="menu_sort_vote_count">Most rated</string>
+    <string name="menu_sort_favorites">Favorites</string>
 
     <!-- Movie details -->
     <string name="movie_details_rating">Rating: %1$s</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_scroll_to_top">Scroll to top</string>
+    <string name="menu_about">About</string>
+    <string name="movie_item_btn_favorite_desc">Save to favorites</string>
 
 </resources>

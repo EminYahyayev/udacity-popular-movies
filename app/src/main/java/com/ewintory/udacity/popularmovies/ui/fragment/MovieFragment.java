@@ -9,14 +9,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.ui.dagger.MoviesModule;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
+import timber.log.Timber;
 
 public final class MovieFragment extends BaseFragment {
-    public static final String TAG = MoviesFragment.class.getSimpleName();
+    public static final String TAG = SortedMoviesFragment.class.getSimpleName();
+
+    @Inject Picasso mPicasso;
 
     @Bind(R.id.movie_poster) ImageView mPoster;
     @Bind(R.id.movie_overview) TextView mOverview;
@@ -26,16 +35,17 @@ public final class MovieFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_movie, container, false);
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     public void setMovie(Movie movie) {
+        Timber.v("setMovie: movie=" + movie);
         mOverview.setText(movie.getOverview());
         mRating.setText(getString(R.string.movie_details_rating, movie.getVoteAverage()));
 
-        Glide.with(getActivity())
-                .load(movie.getPosterPath())
+        mPicasso.load(movie.getPosterPath())
+                .fit()
                 .into(mPoster);
+    }
+
+    @Override protected List<Object> getModules() {
+        return Collections.<Object>singletonList(new MoviesModule());
     }
 }

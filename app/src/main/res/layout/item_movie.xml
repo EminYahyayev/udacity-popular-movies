@@ -1,20 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    android:id="@+id/movie_container"
+    android:id="@+id/movie_item_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/movie_item_height"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_spacing_half"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    tools:layout_margin="@dimen/item_spacing_full">
 
-    <ImageView
-        android:id="@+id/movie_poster"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/movie_image_desc"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/placeholder_poster_1" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout
+            android:id="@+id/movie_item_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/movie_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/movie_image_desc"
+                android:scaleType="centerCrop"
+                android:src="@color/movie_image_placeholder"/>
+
+        </com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout>
+
+        <LinearLayout
+            android:id="@+id/movie_item_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_primary"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/keyline_1"
+                android:layout_marginLeft="@dimen/keyline_1"
+                android:layout_marginStart="@dimen/keyline_1"
+                android:layout_marginTop="@dimen/keyline_1"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/movie_item_title"
+                    style="@style/MovieItemText"
+                    android:lines="1"
+                    android:textColor="@color/body_text_1_inverse"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    tools:text="Jurassic World" />
+
+                <TextView
+                    android:id="@+id/movie_item_genre"
+                    style="@style/MovieItemText"
+                    android:textColor="@color/body_text_2_inverse"
+                    android:textSize="@dimen/text_size_medium"
+                    tools:text="Action" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/movie_item_btn_favorite"
+                style="@style/ActionButton.Favorite"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/movie_item_btn_favorite_desc"
+                android:src="@drawable/ic_favorite_border" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

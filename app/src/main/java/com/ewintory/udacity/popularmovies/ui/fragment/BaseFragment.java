@@ -5,7 +5,8 @@ import android.support.annotation.CallSuper;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.ewintory.udacity.popularmovies.App;
+import com.ewintory.udacity.popularmovies.MoviesApp;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,11 @@ import rx.android.app.AppObservable;
 
 /**
  * Base class for all fragments.
- * Binds views and performs dependency injections
+ * Binds views, watches memory leaks and performs dependency injections
+ *
+ * @see ButterKnife
+ * @see RefWatcher
+ * @see ObjectGraph
  */
 public abstract class BaseFragment extends Fragment {
 
@@ -45,13 +50,13 @@ public abstract class BaseFragment extends Fragment {
     @Override public void onDestroy() {
         mObjectGraph = null;
         super.onDestroy();
-        App.get(getActivity()).getRefWatcher().watch(this);
+        MoviesApp.get(getActivity()).getRefWatcher().watch(this);
     }
 
     private void buildObjectGraph() {
         Object[] modules = getModules().toArray();
         if (modules.length > 0) {
-            mObjectGraph = App.get(getActivity()).buildScopedObjectGraph(modules);
+            mObjectGraph = MoviesApp.get(getActivity()).buildScopedObjectGraph(modules);
             mObjectGraph.inject(this);
         }
     }
@@ -61,7 +66,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Binds the given source sequence to a support-v4 fragment.
+     * Binds the given source sequence to this fragment.
      *
      * @see AppObservable#bindSupportFragment(Fragment, Observable)
      */

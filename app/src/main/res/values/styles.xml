@@ -4,7 +4,6 @@
 
     <style name="Toolbar">
         <item name="android:background">?colorPrimary</item>
-        <!--<item name="android:elevation" tools:ignore="NewApi">@dimen/headerbar_elevation</item>-->
     </style>
 
     <style name="ActionBar.ThemeOverlay" parent="">
@@ -24,5 +23,29 @@
         <item name="android:textColor">@color/body_text_white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
+
+    <!-- Browse movies -->
+
+    <style name="MovieItemFooter">
+        <item name="android:background">@color/theme_primary</item>
+    </style>
+
+    <style name="MovieItemText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="ActionButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ActionButton.Favorite" />
+
 
 </resources>

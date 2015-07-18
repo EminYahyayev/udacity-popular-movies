@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
-    android:id="@+id/movies_animator"
+<com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout
+    android:id="@+id/multi_swipe_refresh_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:inAnimation="@android:anim/fade_in"
-    android:outAnimation="@android:anim/fade_out">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/partial_view_loading" />
-
-    <include layout="@layout/partial_view_error" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/movies_recycler_view"
+    <com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
+        android:id="@+id/movies_animator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false" />
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
 
-</com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
+        <include layout="@layout/partial_view_loading" />
+
+        <include layout="@layout/partial_view_error" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movies_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="@dimen/item_spacing_half" />
+
+    </com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
+
+</com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout>

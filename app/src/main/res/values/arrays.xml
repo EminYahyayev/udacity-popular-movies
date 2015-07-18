@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="genre_ids">
+        <item>28</item>
+        <item>12</item>
+        <item>16</item>
+        <item>35</item>
+        <item>80</item>
+        <item>99</item>
+        <item>18</item>
+        <item>10751</item>
+        <item>14</item>
+        <item>10765</item>
+        <item>36</item>
+        <item>27</item>
+        <item>10402</item>
+        <item>9648</item>
+        <item>10749</item>
+        <item>878</item>
+        <item>10770</item>
+        <item>53</item>
+        <item>10752</item>
+        <item>37</item>
+    </integer-array>
+
+    <string-array name="genre_names">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>Foreign</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>TV Movie</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
+
+</resources>

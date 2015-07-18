@@ -1,0 +1,29 @@
+package com.ewintory.udacity.popularmovies.data.api;
+
+
+import com.ewintory.udacity.popularmovies.data.model.GenreMetadata;
+import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.data.model.Review;
+import com.ewintory.udacity.popularmovies.data.model.Video;
+
+import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
+import rx.Observable;
+
+public interface MoviesService {
+
+    @GET("/genre/movie/list") Observable<GenreMetadata.Response> genres();
+
+    @GET("/discover/movie") Observable<Movie.Response> discoverMovies(
+            @Query("sort_by") Sort sort,
+            @Query("page") Integer page);
+
+    @GET("/movie/{id}/videos") Observable<Video.Response> videos(
+            @Path("id") Integer id);
+
+    @GET("/movie/{id}/reviews") Observable<Review.Response> reviews(
+            @Path("id") Integer id,
+            @Query("page") Integer page);
+
+}

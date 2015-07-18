@@ -18,10 +18,29 @@
                     android:title="@string/menu_sort_popularity" />
 
                 <item
-                    android:id="@+id/menu_sort_rating"
-                    android:title="@string/menu_sort_rating" />
+                    android:id="@+id/menu_sort_vote_count"
+                    android:title="@string/menu_sort_vote_count" />
+
+                <item
+                    android:id="@+id/menu_sort_vote_average"
+                    android:title="@string/menu_sort_vote_average" />
             </group>
         </menu>
     </item>
+
+    <item
+        android:id="@+id/menu_scroll_to_top"
+        android:icon="@drawable/ic_action_up"
+        android:title="@string/menu_scroll_to_top"/>
+
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/ic_action_up"
+        android:title="@string/menu_refresh"/>
+
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_action_help"
+        android:title="@string/menu_about" />
 
 </menu>

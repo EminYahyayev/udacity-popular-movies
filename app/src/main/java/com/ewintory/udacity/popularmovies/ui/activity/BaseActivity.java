@@ -7,29 +7,28 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
-import com.ewintory.udacity.popularmovies.App;
+import com.ewintory.udacity.popularmovies.MoviesApp;
 import com.ewintory.udacity.popularmovies.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.app.AppObservable;
+import timber.log.Timber;
 
 /**
  * Base class for all activities.
  * Binds Views
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    public static final String TAG = BaseActivity.class.getSimpleName();
 
     @Nullable @Bind(R.id.toolbar) Toolbar mToolbar;
 
     @CallSuper
     @Override protected void onDestroy() {
         super.onDestroy();
-        App.get(this).getRefWatcher().watch(this);
+        MoviesApp.get(this).getRefWatcher().watch(this);
     }
 
     @CallSuper
@@ -45,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         if (mToolbar == null) {
-            Log.w(TAG, "Didn't find a toolbar");
+            Timber.w("Didn't find a toolbar");
             return;
         }
 

@@ -3,39 +3,42 @@ package com.ewintory.udacity.popularmovies.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ewintory.udacity.popularmovies.R;
+import com.ewintory.udacity.popularmovies.data.api.Sort;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.data.model.Sort;
-import com.ewintory.udacity.popularmovies.ui.fragment.MoviesFragment;
+import com.ewintory.udacity.popularmovies.ui.fragment.SortedMoviesFragment;
 import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
+import com.ewintory.udacity.popularmovies.utils.PrefUtils;
+
+import timber.log.Timber;
 
 public final class BrowseMoviesActivity extends BaseActivity implements MovieClickListener {
     private static final String STATE_SORT = "STATE_SORT";
 
-    private MoviesFragment mMoviesFragment;
-    private Sort mSort = Sort.POPULARITY_DESC;
+    private SortedMoviesFragment mSortedMoviesFragment;
+    private Sort mSort;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
 
-        mMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        mSort = (savedInstanceState != null) ?
+                (Sort) savedInstanceState.getSerializable(STATE_SORT)
+                : PrefUtils.getMoviesSort(this);
+
+        Timber.d("onPostCreate: mSort=" + mSort);
     }
 
     @Override protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if (savedInstanceState != null)
-            mSort = (Sort) savedInstanceState.getSerializable(STATE_SORT);
-
-        Log.d(TAG, "Sort=" + mSort);
-
-        mMoviesFragment.reloadMovies(mSort);
+        mSortedMoviesFragment = (SortedMoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        mSortedMoviesFragment.reloadFromSort(mSort);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,11 +49,15 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
 
     @Override public boolean onPrepareOptionsMenu(Menu menu) {
         switch (mSort) {
-            case POPULARITY_DESC:
+            case POPULARITY:
                 menu.findItem(R.id.menu_sort_popularity).setChecked(true);
                 break;
-            case VOTE_AVERAGE_DESC:
-                menu.findItem(R.id.menu_sort_rating).setChecked(true);
+            case VOTE_AVERAGE:
+                menu.findItem(R.id.menu_sort_vote_average).setChecked(true);
+                break;
+            case VOTE_COUNT:
+                menu.findItem(R.id.menu_sort_vote_count).setChecked(true);
+                break;
         }
         return true;
     }
@@ -58,12 +65,19 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_sort_popularity:
-                item.setChecked(!item.isChecked());
-                onSortChanged(Sort.POPULARITY_DESC);
+                onSortSelected(item, Sort.POPULARITY);
                 break;
-            case R.id.menu_sort_rating:
-                item.setChecked(!item.isChecked());
-                onSortChanged(Sort.VOTE_AVERAGE_DESC);
+            case R.id.menu_sort_vote_average:
+                onSortSelected(item, Sort.VOTE_AVERAGE);
+                break;
+            case R.id.menu_sort_vote_count:
+                onSortSelected(item, Sort.VOTE_COUNT);
+                break;
+            case R.id.menu_refresh:
+                mSortedMoviesFragment.reloadFromSort(mSort);
+                break;
+            case R.id.menu_scroll_to_top:
+                mSortedMoviesFragment.scrollToTop(true);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -74,15 +88,30 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
         outState.putSerializable(STATE_SORT, mSort);
     }
 
+    @Override protected void onPause() {
+        PrefUtils.setMoviesSort(this, mSort);
+        super.onPause();
+    }
+
     @Override public void onContentClicked(Movie movie, View view) {
         Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
     }
 
+    @Override public void onFavoredClicked(Movie movie, View view) {
+        Toast.makeText(this, "Favored!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onSortSelected(MenuItem item, Sort sort) {
+        if (!item.isChecked()) {
+            item.setChecked(true);
+            onSortChanged(sort);
+        }
+    }
+
     private void onSortChanged(@NonNull Sort sort) {
-        mSort = sort;
-        mMoviesFragment.reloadMovies(mSort);
-        mMoviesFragment.scrollToTop();
+        mSortedMoviesFragment.reloadFromSort(mSort = sort);
+        mSortedMoviesFragment.scrollToTop(false);
     }
 }

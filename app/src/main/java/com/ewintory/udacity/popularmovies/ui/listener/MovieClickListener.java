@@ -8,8 +8,11 @@ public interface MovieClickListener {
 
     void onContentClicked(Movie movie, View view);
 
-    class SimpleListener implements MovieClickListener {
+    void onFavoredClicked(Movie movie, View view);
 
-        @Override public void onContentClicked(Movie movie, View view) {}
-    }
+    MovieClickListener DUMMY = new MovieClickListener() {
+        @Override public void onContentClicked(Movie movie, View view) { /** ignore */}
+
+        @Override public void onFavoredClicked(Movie movie, View view) { /** ignore */}
+    };
 }
