@@ -27,10 +27,7 @@ public final class PaletteTransformation implements Transformation {
     private PaletteTransformation() {}
 
     @Override public Bitmap transform(Bitmap source) {
-        Palette palette = new Palette.Builder(source)
-                .maximumColorCount(24)
-                .generate();
-
+        Palette palette = Palette.generate(source);
         CACHE.put(source, palette);
         return source;
     }

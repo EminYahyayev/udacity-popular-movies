@@ -35,7 +35,7 @@ public final class ApiModule {
         return new RestAdapter.Builder()
                 .setClient(new OkClient(client))
                 .setEndpoint(endpoint)
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override public void intercept(RequestFacade request) {
                         request.addQueryParam("api_key", BuildConfig.MOVIE_DB_API_KEY);

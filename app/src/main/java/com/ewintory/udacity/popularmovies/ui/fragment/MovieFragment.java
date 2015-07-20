@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.ui.dagger.MoviesModule;
+import com.ewintory.udacity.popularmovies.ui.module.MoviesModule;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ import butterknife.Bind;
 import timber.log.Timber;
 
 public final class MovieFragment extends BaseFragment {
-    public static final String TAG = SortedMoviesFragment.class.getSimpleName();
+    public static final String TAG = MoviesFragment.class.getSimpleName();
 
     @Inject Picasso mPicasso;
 

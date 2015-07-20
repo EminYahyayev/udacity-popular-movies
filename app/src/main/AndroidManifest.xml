@@ -26,6 +26,10 @@
             android:parentActivityName=".ui.activity.BrowseMoviesActivity"
             android:theme="@style/Theme.PopularMovies.MovieDetails" />
 
+        <meta-data
+            android:name="com.ewintory.udacity.popularmovies.utils.MoviesGlideModule"
+            android:value="GlideModule" />
+
     </application>
 
 </manifest>

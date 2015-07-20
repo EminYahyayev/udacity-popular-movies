@@ -5,8 +5,8 @@
     android:padding="8dp">
 
     <ProgressBar
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/item_load_more_size"
+        android:layout_height="@dimen/item_load_more_size"
         android:layout_gravity="center"
         android:indeterminate="true" />
 

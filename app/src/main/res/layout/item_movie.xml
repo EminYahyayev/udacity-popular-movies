@@ -1,13 +1,10 @@
-<FrameLayout
+<android.support.v7.widget.CardView
     android:id="@+id/movie_item_container"
+    style="@style/MovieItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/item_spacing_half"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_height="match_parent"
     tools:layout_margin="@dimen/item_spacing_full">
 
     <LinearLayout
@@ -18,7 +15,7 @@
         <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout
             android:id="@+id/movie_item_image_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/movie_item_image"
@@ -27,7 +24,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/movie_image_desc"
                 android:scaleType="centerCrop"
-                android:src="@color/movie_image_placeholder"/>
+                android:src="@color/movie_image_placeholder" />
 
         </com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout>
 
@@ -36,12 +33,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_primary"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginBottom="@dimen/keyline_1"
                 android:layout_marginLeft="@dimen/keyline_1"
                 android:layout_marginStart="@dimen/keyline_1"
@@ -69,8 +66,7 @@
 
             <ImageButton
                 android:id="@+id/movie_item_btn_favorite"
-                style="@style/ActionButton.Favorite"
-                android:layout_gravity="center_vertical"
+                style="@style/FavoriteButton"
                 android:contentDescription="@string/movie_item_btn_favorite_desc"
                 android:src="@drawable/ic_favorite_border" />
 
@@ -78,4 +74,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</android.support.v7.widget.CardView>

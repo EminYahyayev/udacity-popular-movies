@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.api.Sort;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.ui.fragment.SortedMoviesFragment;
+import com.ewintory.udacity.popularmovies.ui.fragment.MoviesFragment;
 import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
 import com.ewintory.udacity.popularmovies.utils.PrefUtils;
 
@@ -20,7 +20,7 @@ import timber.log.Timber;
 public final class BrowseMoviesActivity extends BaseActivity implements MovieClickListener {
     private static final String STATE_SORT = "STATE_SORT";
 
-    private SortedMoviesFragment mSortedMoviesFragment;
+    private MoviesFragment mSortedMoviesFragment;
     private Sort mSort;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
     @Override protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        mSortedMoviesFragment = (SortedMoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
+        mSortedMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
         mSortedMoviesFragment.reloadFromSort(mSort);
     }
 

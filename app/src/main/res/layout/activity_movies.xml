@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragment_movies"
-        android:name="com.ewintory.udacity.popularmovies.ui.fragment.SortedMoviesFragment"
+        android:name="com.ewintory.udacity.popularmovies.ui.fragment.MoviesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_movies" />

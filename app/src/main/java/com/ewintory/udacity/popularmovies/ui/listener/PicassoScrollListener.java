@@ -1,4 +1,4 @@
-package com.ewintory.udacity.popularmovies.utils;
+package com.ewintory.udacity.popularmovies.ui.listener;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

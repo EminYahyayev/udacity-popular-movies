@@ -7,10 +7,6 @@ import java.util.List;
  */
 public final class StringUtils {
 
-    private StringUtils() {
-        throw new AssertionError("No instances.");
-    }
-
     public static String join(List<String> strings, String delimiter) {
         return join(strings, delimiter, new StringBuilder(strings.size() * 8));
     }

@@ -5,11 +5,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 import com.ewintory.udacity.popularmovies.data.api.ApiModule;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLiteDeleteResolver;
 import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLiteGetResolver;
 import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLitePutResolver;
+import com.ewintory.udacity.popularmovies.utils.MoviesGlideModule;
 import com.ewintory.udacity.popularmovies.utils.MoviesHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,12 +37,14 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Module(
         includes = ApiModule.class,
+        injects = {
+                MoviesGlideModule.class
+        },
         complete = false,
         library = true
 )
 public final class DataModule {
-    public static final int DISK_CACHE_SIZE = 100 * 1024 * 1024; // 100MB
-
+    public static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 100MB
 
 //    @Provides @Singleton public StorIOSQLite provideStorIOSQLite(@NonNull SQLiteOpenHelper sqLiteOpenHelper) {
 //        return DefaultStorIOSQLite.builder()

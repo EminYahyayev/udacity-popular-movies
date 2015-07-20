@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import timber.log.Timber;
-
 public class MoviesHelper {
 
     public static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p";
@@ -57,20 +55,32 @@ public class MoviesHelper {
     public static String buildPosterImageUrl(String imagePath, int width) {
         String widthPath;
 
-        if (width <= 92)
-            widthPath = "/w92";
-        else if (width <= 154)
-            widthPath = "/w154";
-        else if (width <= 185)
-            widthPath = "/w185";
-        else if (width <= 342)
-            widthPath = "/w342";
-        else if (width <= 500)
-            widthPath = "/w500";
-        else
+        if (width >= 780)
             widthPath = "/w780";
+        else if (width >= 500)
+            widthPath = "/w500";
+        else if (width >= 342)
+            widthPath = "/w342";
+        else if (width >= 154)
+            widthPath = "/w154";
+        else
+            widthPath = "w92";
 
-        //Timber.v("buildPosterUrl: widthPath=" + widthPath);
+        /**
+         if (width <= 154)
+         widthPath = "/w92";
+         else if (width <= 185)
+         widthPath = "/w154";
+         else if (width <= 342)
+         widthPath = "/w185";
+         else if (width <= 500)
+         widthPath = "/w342";
+         else if (width <= 780)
+         widthPath = "/w500";
+         else
+         widthPath = "/w780";
+         */
+
         return BASE_IMAGE_URL + widthPath + imagePath;
     }
 }

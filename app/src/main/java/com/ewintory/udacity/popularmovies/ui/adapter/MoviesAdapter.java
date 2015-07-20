@@ -1,9 +1,7 @@
 package com.ewintory.udacity.popularmovies.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,16 +14,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
 import com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout;
 import com.ewintory.udacity.popularmovies.utils.Lists;
 import com.ewintory.udacity.popularmovies.utils.MoviesHelper;
-import com.ewintory.udacity.popularmovies.utils.PaletteTransformation;
 import com.ewintory.udacity.popularmovies.utils.ResourceUtils;
 import com.ewintory.udacity.popularmovies.utils.StringUtils;
-import com.squareup.picasso.Callback;
+import com.github.florent37.glidepalette.BitmapPalette;
+import com.github.florent37.glidepalette.GlidePalette;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
+import timber.log.Timber;
 
 public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements Action1<List<Movie>> {
@@ -88,10 +88,12 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    public boolean isLoadMore(int position) {
+        return showLoadMore && (position == (getItemCount() - 1)); // At last position add one
+    }
+
     @Override public int getItemViewType(int position) {
-        return (showLoadMore && position == (getItemCount() - 1)) // At last position add one
-                ? VIEW_TYPE_LOAD_MORE
-                : VIEW_TYPE_MOVIE;
+        return isLoadMore(position) ? VIEW_TYPE_LOAD_MORE : VIEW_TYPE_MOVIE;
     }
 
     @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -135,7 +137,8 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    public static final class MovieHolder extends RecyclerView.ViewHolder {
+    public final class MovieHolder extends RecyclerView.ViewHolder {
+
         @Bind(R.id.movie_item_container) View mContentContainer;
         @Bind(R.id.movie_item_image) ImageView mImageView;
         @Bind(R.id.movie_item_image_container) AspectLockedFrameLayout mImageContainer;
@@ -175,19 +178,17 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 mGenre.setText(StringUtils.join(adapter.moviesHelper.getGenreNames(genreIds), ", "));
 
             resetColors();
-            adapter.picasso
+            Glide.with(adapter.fragment)
                     .load(movie.getPosterPath())
-                    .tag(PICASSO_TAG)
+                    .load(movie.getPosterPath())
                     .placeholder(R.color.movie_image_placeholder)
-                    .fit().centerCrop()
-                    .transform(PaletteTransformation.instance())
-                    .into(mImageView, new Callback.EmptyCallback() {
-                        @Override public void onSuccess() {
-                            Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
-                            Palette palette = PaletteTransformation.getPalette(bitmap);
+                    .crossFade()
+                    .listener(GlidePalette.with(movie.getPosterPath()).intoCallBack(new BitmapPalette.CallBack() {
+                        @Override public void onPaletteLoaded(Palette palette) {
                             applyColors(palette.getVibrantSwatch());
                         }
-                    });
+                    }))
+                    .into(mImageView);
         }
 
         private void resetColors() {
@@ -207,3 +208,19 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 }
+
+/**
+ * //            adapter.picasso
+ * //                    .load(movie.getPosterPath())
+ * //                    .tag(PICASSO_TAG)
+ * //                    .placeholder(R.color.movie_image_placeholder)
+ * //                    .fit().centerCrop()
+ * //                    .transform(PaletteTransformation.instance())
+ * //                    .into(mImageView, new Callback.EmptyCallback() {
+ * //                        @Override public void onSuccess() {
+ * //                            Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
+ * //                            Palette palette = PaletteTransformation.getPalette(bitmap);
+ * //                            applyColors(palette.getVibrantSwatch());
+ * //                        }
+ * //                    });
+ */

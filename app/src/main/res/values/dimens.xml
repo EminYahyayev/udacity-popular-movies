@@ -18,8 +18,10 @@
     <dimen name="toolbar_elevation">8dp</dimen>
 
     <!-- Browse Movies -->
-    <dimen name="movie_details_poster_height">240dp</dimen>
     <item name="movie_item_image_aspect_ratio" format="float" type="dimen">0.675</item>
+
+    <!-- Movie Details -->
+    <dimen name="movie_details_poster_height">240dp</dimen>
 
     <!-- Common -->
     <dimen name="item_spacing_half">2dp</dimen>
@@ -27,5 +29,6 @@
     <dimen name="element_spacing_normal">8dp</dimen>
     <dimen name="content_padding_normal">16dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="item_load_more_size">48dp</dimen>
 
 </resources>
