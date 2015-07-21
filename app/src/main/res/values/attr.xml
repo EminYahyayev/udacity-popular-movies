@@ -5,4 +5,9 @@
         <attr name="aspectRatio" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="MessageView">
+        <attr name="messageText" format="string" />
+        <attr name="messageImage" format="reference" />
+    </declare-styleable>
+
 </resources>

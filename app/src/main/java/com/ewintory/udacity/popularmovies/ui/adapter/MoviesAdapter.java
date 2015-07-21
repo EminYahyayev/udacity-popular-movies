@@ -1,13 +1,10 @@
 package com.ewintory.udacity.popularmovies.ui.adapter;
 
-import android.content.Context;
 import android.graphics.PorterDuff;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -25,7 +22,6 @@ import com.ewintory.udacity.popularmovies.utils.ResourceUtils;
 import com.ewintory.udacity.popularmovies.utils.StringUtils;
 import com.github.florent37.glidepalette.BitmapPalette;
 import com.github.florent37.glidepalette.GlidePalette;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,111 +29,38 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
-import timber.log.Timber;
 
-public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements Action1<List<Movie>> {
+public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.MovieHolder> {
 
-    public static final String PICASSO_TAG = "picasso_movies";
+    @NonNull private final MoviesHelper mMoviesHelper;
+    @NonNull private MovieClickListener mListener = MovieClickListener.DUMMY;
 
-    @LayoutRes private static final int VIEW_TYPE_LOAD_MORE = R.layout.item_load_more;
-    @LayoutRes private static final int VIEW_TYPE_MOVIE = R.layout.item_movie;
-
-    /**
-     * I store {@link Fragment} instead of {@link Context} in order to use Glide's Lifecycle integration
-     *
-     * @see <a href="http://github.com/bumptech/glide/wiki">Glide's wiki</a>
-     */
-    @NonNull private final Fragment fragment;
-    @NonNull private final LayoutInflater inflater;
-    @NonNull private final MoviesHelper moviesHelper;
-    @NonNull private final Picasso picasso;
-
-    @NonNull private MovieClickListener listener;
-    @NonNull private List<Movie> movies;
-
-    private boolean showLoadMore = false;
-
-    public MoviesAdapter(Fragment fragment, @NonNull MovieClickListener listener, Picasso picasso) {
-        this(fragment, listener, picasso, new ArrayList<Movie>());
+    public MoviesAdapter(Fragment fragment) {
+        this(fragment, new ArrayList<Movie>());
     }
 
-    public MoviesAdapter(Fragment fragment, @NonNull MovieClickListener listener, Picasso picasso, @NonNull List<Movie> movies) {
-        inflater = LayoutInflater.from(fragment.getActivity());
-        moviesHelper = new MoviesHelper(fragment.getActivity());
-        this.fragment = fragment;
-        this.listener = listener;
-        this.picasso = picasso;
-        this.movies = movies;
+    public MoviesAdapter(Fragment fragment, List<Movie> movies) {
+        super(fragment, movies);
+        mMoviesHelper = new MoviesHelper(fragment.getActivity());
     }
 
     public void setListener(@NonNull MovieClickListener listener) {
-        this.listener = listener;
+        this.mListener = listener;
     }
 
-    public void setLoadMore(boolean enabled) {
-        if (showLoadMore != enabled) {
-            if (showLoadMore) {
-                notifyItemRemoved(getItemCount()); // Remove last position
-                showLoadMore = false;
-            } else {
-                notifyItemInserted(getItemCount());
-                showLoadMore = true;
-            }
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == VIEW_TYPE_ITEM) {
+            ((MovieHolder) holder).bind(mItems.get(position));
         }
     }
 
-    public boolean isLoadMore(int position) {
-        return showLoadMore && (position == (getItemCount() - 1)); // At last position add one
+    @Override
+    protected MovieHolder onCreateItemHolder(ViewGroup parent, int viewType) {
+        return new MovieHolder(mInflater.inflate(R.layout.item_movie, parent, false));
     }
 
-    @Override public int getItemViewType(int position) {
-        return isLoadMore(position) ? VIEW_TYPE_LOAD_MORE : VIEW_TYPE_MOVIE;
-    }
-
-    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case VIEW_TYPE_LOAD_MORE:
-                return new RecyclerView.ViewHolder(inflater.inflate(VIEW_TYPE_LOAD_MORE, parent, false)) {};
-            case VIEW_TYPE_MOVIE:
-                return new MovieHolder(inflater.inflate(VIEW_TYPE_MOVIE, parent, false));
-            default:
-                throw new IllegalStateException("No such view type specified");
-        }
-    }
-
-    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == VIEW_TYPE_MOVIE) {
-            ((MovieHolder) holder).bind(movies.get(position), this);
-        }
-    }
-
-    @Override public int getItemCount() {
-        return movies.size() + ((showLoadMore) ? 1 : 0);
-    }
-
-    @Override public void call(List<Movie> newMovies) {
-        add(newMovies);
-    }
-
-    public void add(List<Movie> newMovies) {
-        if (newMovies == null)
-            return;
-
-        int currentSize = movies.size();
-        int amountInserted = newMovies.size();
-
-        movies.addAll(newMovies);
-        notifyItemRangeInserted(currentSize, amountInserted);
-    }
-
-    public void clear() {
-        movies.clear();
-        notifyDataSetChanged();
-    }
-
-    public final class MovieHolder extends RecyclerView.ViewHolder {
+    final class MovieHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.movie_item_container) View mContentContainer;
         @Bind(R.id.movie_item_image) ImageView mImageView;
@@ -156,18 +79,18 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, view);
         }
 
-        public void bind(@NonNull final Movie movie, @NonNull final MoviesAdapter adapter) {
-            mImageContainer.setAspectRatio(ResourceUtils.getFloatDimension(adapter.fragment.getResources(), R.dimen.movie_item_image_aspect_ratio));
+        public void bind(@NonNull final Movie movie) {
+            mImageContainer.setAspectRatio(ResourceUtils.getFloatDimension(mFragment.getResources(), R.dimen.movie_item_image_aspect_ratio));
 
             mContentContainer.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
-                    adapter.listener.onContentClicked(movie, view);
+                    mListener.onContentClicked(movie, view);
                 }
             });
 
             mFavoriteButton.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    adapter.listener.onFavoredClicked(movie, v);
+                    mListener.onFavoredClicked(movie, v);
                 }
             });
 
@@ -175,10 +98,10 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             List<Integer> genreIds = movie.getGenreIds();
             if (!Lists.isEmpty(genreIds))
-                mGenre.setText(StringUtils.join(adapter.moviesHelper.getGenreNames(genreIds), ", "));
+                mGenre.setText(StringUtils.join(mMoviesHelper.getGenreNames(genreIds), ", "));
 
             resetColors();
-            Glide.with(adapter.fragment)
+            Glide.with(mFragment)
                     .load(movie.getPosterPath())
                     .load(movie.getPosterPath())
                     .placeholder(R.color.movie_image_placeholder)
@@ -208,19 +131,3 @@ public final class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 }
-
-/**
- * //            adapter.picasso
- * //                    .load(movie.getPosterPath())
- * //                    .tag(PICASSO_TAG)
- * //                    .placeholder(R.color.movie_image_placeholder)
- * //                    .fit().centerCrop()
- * //                    .transform(PaletteTransformation.instance())
- * //                    .into(mImageView, new Callback.EmptyCallback() {
- * //                        @Override public void onSuccess() {
- * //                            Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
- * //                            Palette palette = PaletteTransformation.getPalette(bitmap);
- * //                            applyColors(palette.getVibrantSwatch());
- * //                        }
- * //                    });
- */

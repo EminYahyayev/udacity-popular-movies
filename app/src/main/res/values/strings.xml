@@ -8,7 +8,7 @@
 
     <!-- Common -->
     <string name="view_empty_message">No matching items</string>
-    <string name="view_error_message">This content is not available offline. Please tap to retry.</string>
+    <string name="view_error_message">This content is not available offline.</string>
 
     <!-- Browse Movies-->
     <string name="movie_image_desc">Movie image</string>

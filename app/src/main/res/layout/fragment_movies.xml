@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:id="@+id/coordinator_layout"
+<com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout
+    android:id="@+id/multi_swipe_refresh_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout
-        android:id="@+id/multi_swipe_refresh_layout"
+    <com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
+        android:id="@+id/movies_animator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
 
-        <com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
-            android:id="@+id/movies_animator"
+        <include layout="@layout/partial_view_loading" />
+
+        <com.ewintory.udacity.popularmovies.ui.widget.MessageView
+            android:id="@+id/view_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inAnimation="@android:anim/fade_in"
-            android:outAnimation="@android:anim/fade_out">
+            android:clickable="true"
+            app:messageText="@string/view_error_message"
+            app:messageImage="@drawable/egg_error"/>
 
-            <include layout="@layout/partial_view_loading" />
+        <com.ewintory.udacity.popularmovies.ui.widget.MessageView
+            android:id="@+id/view_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            app:messageText="@string/view_empty_message"
+            app:messageImage="@drawable/egg_empty"/>
 
-            <include layout="@layout/partial_view_error" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movies_recycler_view"
+            style="@style/CollectionView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/movies_recycler_view"
-                style="@style/CollectionView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+    </com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
 
-        </com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
-
-    </com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout>
-</android.support.design.widget.CoordinatorLayout>
+</com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout>

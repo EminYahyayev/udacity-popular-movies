@@ -1,5 +1,7 @@
 package com.ewintory.udacity.popularmovies.ui.listener;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -19,6 +21,12 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     // Sets the starting page index
     private int startingPageIndex = 0;
 
+    public interface OnLoadMoreCallback {
+        void onLoadMore(int page, int totalItemsCount);
+    }
+
+    private OnLoadMoreCallback mCallback;
+
     public EndlessScrollListener() {}
 
     public EndlessScrollListener(int visibleThreshold) {
@@ -29,6 +37,11 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         this.visibleThreshold = visibleThreshold;
         this.startingPageIndex = startPage;
         this.currentPage = startPage;
+    }
+
+    public EndlessScrollListener setCallback(OnLoadMoreCallback callback) {
+        mCallback = callback;
+        return this;
     }
 
     // This happens many times a second during a scroll, so be wary of the code you place here.
@@ -63,5 +76,26 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     }
 
     // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(int page, int totalItemsCount);
+    public void onLoadMore(int page, int totalItemsCount) {
+        if (mCallback != null) {
+            mCallback.onLoadMore(page, totalItemsCount);
+        }
+    }
+
+    public static EndlessScrollListener fromGridLayoutManager(
+            @NonNull final GridLayoutManager layoutManager,
+            int visibleThreshold,
+            int startPage,
+            @NonNull OnLoadMoreCallback callback) {
+
+        return new EndlessScrollListener(visibleThreshold, startPage) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                final int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                final int totalItemCount = layoutManager.getItemCount();
+
+                onScrolled(firstVisibleItem, lastVisibleItem - firstVisibleItem, totalItemCount);
+            }
+        }.setCallback(callback);
+    }
 }

@@ -41,7 +41,7 @@ public final class MovieDetailsActivity extends BaseActivity {
             ViewCompat.setElevation(toolbar, 0);
         }
 
-        Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
+        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         setMovie(movie);
 
         mMovieFragment = (MovieFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movie);

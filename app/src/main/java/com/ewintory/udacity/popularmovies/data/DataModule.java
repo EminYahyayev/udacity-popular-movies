@@ -1,24 +1,13 @@
 package com.ewintory.udacity.popularmovies.data;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.ewintory.udacity.popularmovies.data.api.ApiModule;
-import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLiteDeleteResolver;
-import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLiteGetResolver;
-import com.ewintory.udacity.popularmovies.data.model.MovieStorIOSQLitePutResolver;
 import com.ewintory.udacity.popularmovies.utils.MoviesGlideModule;
 import com.ewintory.udacity.popularmovies.utils.MoviesHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.pushtorefresh.storio.sqlite.SQLiteTypeMapping;
-import com.pushtorefresh.storio.sqlite.StorIOSQLite;
-import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;

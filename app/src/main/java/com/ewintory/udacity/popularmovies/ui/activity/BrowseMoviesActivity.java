@@ -38,7 +38,8 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
         super.onPostCreate(savedInstanceState);
 
         mSortedMoviesFragment = (MoviesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_movies);
-        mSortedMoviesFragment.reloadFromSort(mSort);
+        if (savedInstanceState == null)
+            mSortedMoviesFragment.reloadFromSort(mSort);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,7 +75,7 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
                 onSortSelected(item, Sort.VOTE_COUNT);
                 break;
             case R.id.menu_refresh:
-                mSortedMoviesFragment.reloadFromSort(mSort);
+                mSortedMoviesFragment.onRefresh();
                 break;
             case R.id.menu_scroll_to_top:
                 mSortedMoviesFragment.scrollToTop(true);
@@ -96,7 +97,7 @@ public final class BrowseMoviesActivity extends BaseActivity implements MovieCli
     @Override public void onContentClicked(Movie movie, View view) {
         Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE, movie);
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     @Override public void onFavoredClicked(Movie movie, View view) {
