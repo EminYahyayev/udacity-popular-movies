@@ -58,7 +58,6 @@ public final class MoviesFragment extends BaseFragment implements
 
     protected MoviesAdapter mMoviesAdapter;
     protected GridLayoutManager mGridLayoutManager;
-    protected EndlessScrollListener mScrollListener;
     protected Subscription mContentSubscription = Subscriptions.empty();
 
     private PublishSubject<Observable<Movie.Response>> mMoviesObservableSubject = PublishSubject.create();
@@ -138,8 +137,8 @@ public final class MoviesFragment extends BaseFragment implements
             mViewAnimator.setDisplayedChildId(ANIMATOR_VIEW_LOADING);
 
         mRecyclerView.clearOnScrollListeners();
-        pullToPage(mCurrentPage);
         mRecyclerView.addOnScrollListener(buildOnScrollListener(mGridLayoutManager, mCurrentPage - 1));
+        pullToPage(mCurrentPage);
     }
 
     private void subscribeToContent() {
@@ -174,7 +173,7 @@ public final class MoviesFragment extends BaseFragment implements
 
     @Override
     public void onLoadMore(int page, int totalItemsCount) {
-        if (!mMoviesAdapter.isLoadMore())
+        if (mMoviesAdapter.isLoadMore())
             pullPage(page);
     }
 
@@ -217,7 +216,7 @@ public final class MoviesFragment extends BaseFragment implements
     }
 
     private EndlessScrollListener buildOnScrollListener(GridLayoutManager layoutManager, int startPage) {
-        return EndlessScrollListener.fromGridLayoutManager(layoutManager, startPage, 4, this);
+        return EndlessScrollListener.fromGridLayoutManager(layoutManager, 4, startPage, this);
     }
 
     private void initSwipeRefreshLayout() {

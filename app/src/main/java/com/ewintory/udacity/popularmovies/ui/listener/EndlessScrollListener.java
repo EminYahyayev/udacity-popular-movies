@@ -90,6 +90,8 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
 
         return new EndlessScrollListener(visibleThreshold, startPage) {
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy <= 0) return;
+
                 final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
                 final int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 final int totalItemCount = layoutManager.getItemCount();
