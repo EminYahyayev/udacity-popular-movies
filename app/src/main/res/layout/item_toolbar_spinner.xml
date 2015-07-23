@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/explore_spinner_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="?colorPrimary">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_sort"
+        android:drawablePadding="@dimen/spinner_drawable_padding"
+        android:drawableStart="@drawable/ic_action_sort"
+        android:paddingEnd="4dp"
+        android:paddingLeft="@dimen/spinner_left_padding"
+        android:paddingRight="4dp"
+        android:textColor="#ffffffff"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="normal"
+        tools:text="Favorites" />
+
+</LinearLayout>

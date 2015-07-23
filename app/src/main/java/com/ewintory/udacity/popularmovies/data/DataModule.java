@@ -54,13 +54,13 @@ public final class DataModule {
                     @Override public Request transformRequest(Request request) {
                         String fullPath = MoviesHelper.buildPosterImageUrl(request.uri.getPath(), request.targetWidth);
 
-                        Timber.v("Full path: " + fullPath);
+                        Timber.tag("Picasso").v("Full path: " + fullPath);
                         return request.buildUpon().setUri(Uri.parse(fullPath)).build();
                     }
                 })
                 .listener(new Picasso.Listener() {
                     @Override public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
-                        Timber.e(e, "Failed to load image: %s", uri);
+                        Timber.tag("Picasso").e(e, "Failed to load image: %s", uri);
                     }
                 })
                 .build();

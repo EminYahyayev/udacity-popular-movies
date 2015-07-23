@@ -16,10 +16,7 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
-@Module(
-        complete = false,
-        library = true
-)
+@Module(complete = false, library = true)
 public final class ApiModule {
     public static final String MOVIE_DB_API_URL = "http://api.themoviedb.org/3";
 
@@ -45,7 +42,7 @@ public final class ApiModule {
                 .build();
     }
 
-    @Provides @Singleton MovieDB provideMoviesService(RestAdapter restAdapter) {
+    @Provides @Singleton MovieDB provideMovieDB(RestAdapter restAdapter) {
         return restAdapter.create(MovieDB.class);
     }
 }

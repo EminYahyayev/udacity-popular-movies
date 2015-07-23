@@ -42,8 +42,9 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
 
     public MoviesAdapter(@NonNull Fragment fragment, @NonNull List<Movie> movies) {
         super(fragment.getActivity(), movies);
-        mFragment = fragment;
         mMoviesHelper = new MoviesHelper(fragment.getActivity());
+        mFragment = fragment;
+        setHasStableIds(true);
     }
 
     public void setListener(@NonNull MovieClickListener listener) {
@@ -51,15 +52,20 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == VIEW_TYPE_ITEM) {
-            ((MovieHolder) holder).bind(mItems.get(position));
-        }
+    public long getItemId(int position) {
+        return (!isLoadMore(position)) ? mItems.get(position).getId() : -1;
     }
 
     @Override
     protected MovieHolder onCreateItemHolder(ViewGroup parent, int viewType) {
         return new MovieHolder(mInflater.inflate(R.layout.item_movie, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == VIEW_TYPE_ITEM) {
+            ((MovieHolder) holder).bind(mItems.get(position));
+        }
     }
 
     final class MovieHolder extends RecyclerView.ViewHolder {
@@ -72,7 +78,7 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
         @Bind(R.id.movie_item_footer) View mFooter;
         @Bind(R.id.movie_item_btn_favorite) ImageButton mFavoriteButton;
 
-        @BindColor(R.color.theme_primary) int mColorThemePrimary;
+        @BindColor(R.color.theme_primary) int mColorBackground;
         @BindColor(R.color.body_text_1_inverse) int mColorBodyText1;
         @BindColor(R.color.body_text_2_inverse) int mColorBodyText2;
 
@@ -84,16 +90,17 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
         public void bind(@NonNull final Movie movie) {
             mImageContainer.setAspectRatio(ResourceUtils.getFloatDimension(mFragment.getResources(), R.dimen.movie_item_image_aspect_ratio));
 
-            mContentContainer.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View view) {
-                    mListener.onContentClicked(movie, view);
-                }
-            });
+            mContentContainer.setOnClickListener(view -> mListener.onContentClicked(movie, view));
 
-            mFavoriteButton.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View view) {
-                    mListener.onFavoredClicked(movie, view);
-                }
+            mFavoriteButton.setImageResource(movie.isFavored()
+                    ? R.drawable.ic_favorite_full
+                    : R.drawable.ic_favorite_border);
+
+            mFavoriteButton.setOnClickListener(view -> {
+                mFavoriteButton.setImageResource(!movie.isFavored()
+                        ? R.drawable.ic_favorite_full
+                        : R.drawable.ic_favorite_border);
+                mListener.onFavoredClicked(movie);
             });
 
             mTitle.setText(movie.getTitle());
@@ -104,7 +111,6 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
 
             resetColors();
             Glide.with(mFragment)
-                    .load(movie.getPosterPath())
                     .load(movie.getPosterPath())
                     .placeholder(R.color.movie_image_placeholder)
                     .crossFade()
@@ -117,7 +123,7 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
         }
 
         private void resetColors() {
-            mFooter.setBackgroundColor(mColorThemePrimary);
+            mFooter.setBackgroundColor(mColorBackground);
             mTitle.setTextColor(mColorBodyText1);
             mGenre.setTextColor(mColorBodyText2);
             mFavoriteButton.setColorFilter(mColorBodyText1, PorterDuff.Mode.MULTIPLY);

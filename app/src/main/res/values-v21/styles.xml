@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Movies.HeaderBar.Spinner" parent="Widget.Movies.HeaderBar.Spinner.Base">
+        <item name="android:theme">@style/ActionBar.ThemeOverlay</item>
+    </style>
+
+</resources>

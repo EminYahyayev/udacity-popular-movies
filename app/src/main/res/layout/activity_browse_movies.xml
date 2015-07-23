@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
-
-    <fragment
-        android:id="@+id/fragment_movies"
-        android:name="com.ewintory.udacity.popularmovies.ui.fragment.SortedMoviesFragment"
+    <FrameLayout
+        android:id="@+id/movies_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_movies" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

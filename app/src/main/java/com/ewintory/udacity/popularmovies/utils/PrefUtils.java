@@ -17,8 +17,11 @@ public final class PrefUtils {
      */
     public static final String PREF_WELCOME_DONE = "pref_welcome_done";
 
-    /** Boolean preference that indicates whether user closed bookmarks' welcome card. */
-    public static final String PREF_MOVIES_SORT = "pref_bookmarks_movies_sort";
+    public static final String PREF_MOVIES_SORT = "pref_movies_sort";
+
+    public static final String PREF_BROWSE_MOVIES_MODE = "pref_browse_movies_mode";
+
+    public static final String PREF_INCLUDE_ADULT = "pref_include_adult";
 
     public static boolean isWelcomeDone(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -41,14 +44,32 @@ public final class PrefUtils {
         sp.edit().putString(PREF_MOVIES_SORT, sort.toString()).apply();
     }
 
-    public static void registerOnSharedPreferenceChangeListener(final Context context,
-                                                                SharedPreferences.OnSharedPreferenceChangeListener listener) {
+    public static String getBrowseMoviesMode(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_BROWSE_MOVIES_MODE, Sort.POPULARITY.toString());
+    }
+
+    public static void setBrowseMoviesMode(final Context context, String mode) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_BROWSE_MOVIES_MODE, mode).apply();
+    }
+
+    public static boolean isIncludeAdult(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_INCLUDE_ADULT, false);
+    }
+
+    public static void setIncludeAdult(final Context context, boolean include) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_INCLUDE_ADULT, include).apply();
+    }
+
+    public static void registerOnSharedPreferenceChangeListener(final Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.registerOnSharedPreferenceChangeListener(listener);
     }
 
-    public static void unregisterOnSharedPreferenceChangeListener(final Context context,
-                                                                  SharedPreferences.OnSharedPreferenceChangeListener listener) {
+    public static void unregisterOnSharedPreferenceChangeListener(final Context context, SharedPreferences.OnSharedPreferenceChangeListener listener) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.unregisterOnSharedPreferenceChangeListener(listener);
     }

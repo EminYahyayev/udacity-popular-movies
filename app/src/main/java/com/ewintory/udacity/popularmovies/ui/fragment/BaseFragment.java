@@ -1,5 +1,6 @@
 package com.ewintory.udacity.popularmovies.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v4.app.Fragment;
@@ -29,9 +30,9 @@ public abstract class BaseFragment extends Fragment {
     private ObjectGraph mObjectGraph;
 
     @CallSuper
-    @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        buildObjectGraph();
+    @Override public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        buildObjectGraph(activity);
     }
 
     @CallSuper
@@ -53,10 +54,10 @@ public abstract class BaseFragment extends Fragment {
         MoviesApp.get(getActivity()).getRefWatcher().watch(this);
     }
 
-    private void buildObjectGraph() {
+    private void buildObjectGraph(Activity activity) {
         Object[] modules = getModules().toArray();
         if (modules.length > 0) {
-            mObjectGraph = MoviesApp.get(getActivity()).buildScopedObjectGraph(modules);
+            mObjectGraph = MoviesApp.get(activity).buildScopedObjectGraph(modules);
             mObjectGraph.inject(this);
         }
     }

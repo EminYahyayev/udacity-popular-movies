@@ -12,7 +12,7 @@
 
     <style name="Theme.PopularMovies" parent="Theme.PopularMovies.Base" />
 
-    <style name="Theme.PopularMovies.BrowseMovies" />
+    <style name="Theme.PopularMovies.BrowseMovies"/>
 
     <style name="Theme.PopularMovies.MovieDetails" />
 

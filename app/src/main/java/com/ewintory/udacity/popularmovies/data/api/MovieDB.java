@@ -2,7 +2,7 @@ package com.ewintory.udacity.popularmovies.data.api;
 
 
 import com.ewintory.udacity.popularmovies.data.model.GenreMetadata;
-import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.data.model.MoviesResponse;
 import com.ewintory.udacity.popularmovies.data.model.Review;
 import com.ewintory.udacity.popularmovies.data.model.Video;
 
@@ -15,11 +15,11 @@ public interface MovieDB {
 
     @GET("/genre/movie/list") Observable<GenreMetadata.Response> genres();
 
-    @GET("/discover/movie") Observable<Movie.Response> discoverMovies(
+    @GET("/discover/movie") Observable<MoviesResponse> discoverMovies(
             @Query("sort_by") Sort sort,
             @Query("page") Integer page);
 
-    @GET("/discover/movie") Observable<Movie.Response> discoverMovies(
+    @GET("/discover/movie") Observable<MoviesResponse> discoverMovies(
             @Query("sort_by") Sort sort,
             @Query("page") Integer page,
             @Query("include_adult") boolean includeAdult);

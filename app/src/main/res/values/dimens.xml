@@ -19,9 +19,13 @@
 
     <!-- Browse Movies -->
     <item name="movie_item_image_aspect_ratio" format="float" type="dimen">0.675</item>
+    <dimen name="spinner_left_padding">0dp</dimen>
+    <dimen name="spinner_drawable_padding">16dp</dimen>
+    <dimen name="explore_spinner_width">200dp</dimen>
+    <dimen name="explore_dropdown_item_height">48dp</dimen>
 
     <!-- Movie Details -->
-    <dimen name="movie_details_poster_height">240dp</dimen>
+    <item name="movie_details_image_aspect_ratio" format="float" type="dimen">1.77</item>
 
     <!-- Common -->
     <dimen name="item_spacing_half">2dp</dimen>

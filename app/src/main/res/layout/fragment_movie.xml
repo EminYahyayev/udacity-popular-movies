@@ -2,49 +2,58 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground">
 
     <LinearLayout
+        android:id="@+id/movie_details_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/keyline_1">
 
+        <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout
+            android:id="@+id/movie_details_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/movie_details_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/movie_poster_desc"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_movie_details_image" />
+
+        </com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/movie_poster"
+            <TextView
+                android:id="@+id/movie_details_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/movie_poster_desc"
-                android:src="@drawable/placeholder_jurassic_world" />
+                android:textSize="@dimen/text_size_xxlarge"
+                tools:text="Jurassic Park" />
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/movie_details_average_rating"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/keyline_1"
-                android:layout_marginStart="@dimen/keyline_1"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/movie_average_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_large"
-                    tools:text="Rating: 8/10" />
-
-            </LinearLayout>
+                android:textSize="@dimen/text_size_large"
+                tools:text="Rating: 8/10" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/movie_overview"
+            android:id="@+id/movie_details_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/keyline_1"

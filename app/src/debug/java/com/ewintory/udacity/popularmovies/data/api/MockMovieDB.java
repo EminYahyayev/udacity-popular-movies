@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.GenreMetadata;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.data.model.MoviesResponse;
 import com.ewintory.udacity.popularmovies.data.model.Review;
 import com.ewintory.udacity.popularmovies.data.model.Video;
 
@@ -41,11 +42,11 @@ public final class MockMovieDB implements MovieDB {
         return Observable.empty();
     }
 
-    @Override public Observable<Movie.Response> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page) {
+    @Override public Observable<MoviesResponse> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page) {
         return Observable.just(mockMovieResponse(page)).timeout(1 + sRandom.nextInt(3), TimeUnit.SECONDS);
     }
 
-    @Override public Observable<Movie.Response> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page, @Query("include_adult") boolean includeAdult) {
+    @Override public Observable<MoviesResponse> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page, @Query("include_adult") boolean includeAdult) {
         return discoverMovies(sort, page);
     }
 
@@ -57,14 +58,14 @@ public final class MockMovieDB implements MovieDB {
         return Observable.empty();
     }
 
-    private Movie.Response mockMovieResponse(Integer page) {
+    private MoviesResponse mockMovieResponse(Integer page) {
         List<Movie> movies = new ArrayList<>(PAGE_SIZE);
 
         for (int id = page * PAGE_SIZE; id < (page + 1) * PAGE_SIZE; id++) {
             movies.add(mockMovie(id));
         }
 
-        return new Movie.Response()
+        return new MoviesResponse()
                 .setMovies(movies)
                 .setPage(page)
                 .setTotalPages(mTotalMoviePages)

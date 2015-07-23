@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/partial_movie_details_header" />
+    <include layout="@layout/toolbar" />
 
-    <fragment
-        android:id="@+id/fragment_movie"
-        android:name="com.ewintory.udacity.popularmovies.ui.fragment.MovieFragment"
+    <FrameLayout
+        android:id="@+id/movie_details_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_movie" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

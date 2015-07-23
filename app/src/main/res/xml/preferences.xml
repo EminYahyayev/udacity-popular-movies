@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="pref_include_adult"
+        android:title="@string/pref_include_adult_title"
+        android:summary="@string/pref_include_adult_description"
+        android:defaultValue="false" />
+
+</PreferenceScreen>

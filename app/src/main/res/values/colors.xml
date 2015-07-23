@@ -13,7 +13,7 @@
 
     <color name="theme_primary">@color/material_red600</color>
     <color name="theme_primary_dark">@color/material_red800</color>
-    <color name="theme_primary_light">@color/material_red100</color>
+    <color name="theme_primary_light">@color/material_red300</color>
 
     <color name="theme_accent_1">@color/material_blueA700</color>
 
@@ -29,5 +29,7 @@
 
     <color name="card_selectable_pressed">@color/theme_primary</color>
     <color name="card_shape_background">#1e000000</color>
+    <color name="list_dropdown_divider_color">#92a3a3a3</color>
+    <color name="list_dropdown_foreground_normal">#ff333333</color>
 
 </resources>

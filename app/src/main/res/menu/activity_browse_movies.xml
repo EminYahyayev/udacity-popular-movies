@@ -6,6 +6,7 @@
         android:id="@+id/menu_sort"
         android:icon="@drawable/ic_action_sort"
         android:title="@string/menu_sort"
+        android:visible="false"
         app:showAsAction="always">
 
         <menu>
@@ -24,6 +25,10 @@
                 <item
                     android:id="@+id/menu_sort_vote_average"
                     android:title="@string/menu_sort_vote_average" />
+
+                <item
+                    android:id="@+id/menu_sort_favorites"
+                    android:title="@string/menu_sort_favorites"/>
             </group>
         </menu>
     </item>
@@ -42,5 +47,9 @@
         android:id="@+id/menu_about"
         android:icon="@drawable/ic_action_help"
         android:title="@string/menu_about" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings" />
 
 </menu>

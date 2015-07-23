@@ -18,6 +18,8 @@ import java.io.InputStream;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public final class MoviesGlideModule implements GlideModule {
 
     @Inject OkHttpClient mOkHttpClient;
@@ -39,7 +41,9 @@ public final class MoviesGlideModule implements GlideModule {
 
         // TODO: support other kinds of images(logo_sizes, e.t.c)
         @Override protected String getUrl(String imagePath, int width, int height) {
-            return ImageUtils.buildPosterUrl(imagePath, width);
+            String url = ImageUtils.buildPosterUrl(imagePath, width);
+            Timber.tag("Glide").v("Loading image: " + url);
+            return url;
         }
 
         public static class Factory implements ModelLoaderFactory<String, InputStream> {

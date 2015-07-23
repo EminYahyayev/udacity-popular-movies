@@ -11,7 +11,10 @@ import com.ewintory.udacity.popularmovies.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import rx.functions.Action1;
+
+public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements Action1<List<T>> {
 
     protected static final int VIEW_TYPE_LOAD_MORE = 1;
     protected static final int VIEW_TYPE_ITEM = 2;
@@ -64,11 +67,21 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
         return isLoadMore(position) ? VIEW_TYPE_LOAD_MORE : VIEW_TYPE_ITEM;
     }
 
-    public void add(@NonNull List<T> newItems) {
-        int currentSize = mItems.size();
-        int amountInserted = newItems.size();
+    @Override
+    public void call(@NonNull List<T> newItems) {
+        add(newItems);
+    }
 
+    public void set(@NonNull List<T> items) {
+        mItems = items;
+        notifyDataSetChanged();
+    }
+
+    public void add(@NonNull List<T> newItems) {
         if (!newItems.isEmpty()) {
+            int currentSize = mItems.size();
+            int amountInserted = newItems.size();
+
             mItems.addAll(newItems);
             notifyItemRangeInserted(currentSize, amountInserted);
         }
@@ -88,10 +101,9 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_LOAD_MORE)
-            return new RecyclerView.ViewHolder(mInflater.inflate(R.layout.item_load_more, parent, false)) {};
-        else
-            return onCreateItemHolder(parent, viewType);
+        return viewType == VIEW_TYPE_LOAD_MORE
+                ? new RecyclerView.ViewHolder(mInflater.inflate(R.layout.item_load_more, parent, false)) {}
+                : onCreateItemHolder(parent, viewType);
     }
 
     protected abstract VH onCreateItemHolder(ViewGroup parent, int viewType);

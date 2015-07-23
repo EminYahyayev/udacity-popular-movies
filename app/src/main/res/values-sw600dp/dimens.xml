@@ -4,9 +4,6 @@
     <dimen name="movie_details_poster_height">240dp</dimen>
 
     <!-- Common -->
-    <dimen name="item_spacing_half">4dp</dimen>
-    <dimen name="item_spacing_full">8dp</dimen>
-    <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="item_load_more_size">72dp</dimen>
 
 </resources>

@@ -20,7 +20,7 @@ public class GenreMetadata {
         }
     };
 
-    private HashMap<Integer, Genre> mGenresMap;
+    private HashMap<Long, Genre> mGenresMap;
     private List<Genre> mGenres;
 
     public GenreMetadata(@NonNull Response response) {
@@ -38,34 +38,9 @@ public class GenreMetadata {
         return Collections.unmodifiableList(mGenres);
     }
 
-    public String getGenreName(Integer id) {
+    public String getGenreName(Long id) {
         Genre genre = mGenresMap.get(id);
         return genre != null ? genre.getName() : null;
-    }
-
-    public static class Genre {
-        @Expose
-        private Integer id;
-        @Expose
-        private String name;
-
-        public Integer getId() {
-            return id;
-        }
-
-        public Genre setId(Integer id) {
-            this.id = id;
-            return this;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Genre setName(String name) {
-            this.name = name;
-            return this;
-        }
     }
 
     public static class Response {

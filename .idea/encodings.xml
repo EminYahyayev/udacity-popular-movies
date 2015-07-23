@@ -2,6 +2,15 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ewintory/udacity/popularmovies/ui/widget/MultiSwipeRefreshLayout.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/color/list_dropdown_foreground_color.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_up.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/spinner_triangle.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/spinner_triangle_sub.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/item_toolbar_spinner.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/item_toolbar_spinner_dropdown.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/widget_toolbar_spinner.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/xml/preferences.xml" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
