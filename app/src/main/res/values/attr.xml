@@ -5,7 +5,7 @@
         <attr name="aspectRatio" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="MessageView">
+    <declare-styleable name="AnimatorStateView">
         <attr name="messageText" format="string" />
         <attr name="messageImage" format="reference" />
     </declare-styleable>

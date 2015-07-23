@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Popular Movies</string>
-    <string name="__leak_canary_display_activity_label" translatable="false">Popular Movies Leaks</string>
+    <string name="app_name" translatable="false">PopMovies</string>
+    <string name="__leak_canary_display_activity_label" translatable="false">PopMovies Leaks</string>
 
     <!-- Screen titles -->
-    <string name="title_browse_movies">Popular Movies</string>
+    <string name="title_browse_movies">PopMovies</string>
     <string name="title_movie_details">Movie Details</string>
 
     <!-- Common -->
@@ -18,6 +18,9 @@
     <string name="menu_sort_vote_average">Highest rated</string>
     <string name="menu_sort_vote_count">Most rated</string>
     <string name="menu_sort_favorites">Favorites</string>
+
+    <string name="favored_empty_message">You have no favored movies yet.</string>
+    <string name="favored_error_message">Loading failed, please try again.</string>
 
     <!-- Movie details -->
     <string name="movie_details_rating">Rating: %1$s</string>

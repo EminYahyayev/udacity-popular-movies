@@ -3,8 +3,8 @@ package com.ewintory.udacity.popularmovies.data;
 import android.app.Application;
 
 import com.ewintory.udacity.popularmovies.data.api.ApiModule;
-import com.ewintory.udacity.popularmovies.data.api.MockMoviesService;
-import com.ewintory.udacity.popularmovies.data.api.MoviesService;
+import com.ewintory.udacity.popularmovies.data.api.MockMovieDB;
+import com.ewintory.udacity.popularmovies.data.api.MovieDB;
 
 import javax.inject.Singleton;
 
@@ -20,7 +20,7 @@ import retrofit.RestAdapter;
 )
 public final class MockApiModule {
 
-    @Provides @Singleton MoviesService provideMoviesService(RestAdapter restAdapter, Application application) {
-        return new MockMoviesService(application);
+    @Provides @Singleton MovieDB provideMoviesService(RestAdapter restAdapter, Application application) {
+        return new MockMovieDB(application);
     }
 }

@@ -11,13 +11,18 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 
-public interface MoviesService {
+public interface MovieDB {
 
     @GET("/genre/movie/list") Observable<GenreMetadata.Response> genres();
 
     @GET("/discover/movie") Observable<Movie.Response> discoverMovies(
             @Query("sort_by") Sort sort,
             @Query("page") Integer page);
+
+    @GET("/discover/movie") Observable<Movie.Response> discoverMovies(
+            @Query("sort_by") Sort sort,
+            @Query("page") Integer page,
+            @Query("include_adult") boolean includeAdult);
 
     @GET("/movie/{id}/videos") Observable<Video.Response> videos(
             @Path("id") Integer id);

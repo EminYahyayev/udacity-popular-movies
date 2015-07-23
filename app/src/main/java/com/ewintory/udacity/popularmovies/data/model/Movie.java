@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteColumn;
-import com.pushtorefresh.storio.sqlite.annotations.StorIOSQLiteType;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +13,17 @@ import java.util.List;
 // This annotation will trigger annotation processor
 // Which will generate type mapping code in compile time,
 // You just need to link it in your code.
-@StorIOSQLiteType(table = "movies")
+//@StorIOSQLiteType(table = "movies")
 public final class Movie implements Parcelable {
 
     @Expose
-    @StorIOSQLiteColumn(name = "_id", key = true)
-    Integer id;
+    //@StorIOSQLiteColumn(name = "_id", key = true)
+            Integer id;
 
     @Expose
     @SerializedName("backdrop_path")
-    @StorIOSQLiteColumn(name = "backdrop_path")
-    String backdropPath;
+    //@StorIOSQLiteColumn(name = "backdrop_path")
+            String backdropPath;
 
     @Expose
     @SerializedName("genre_ids")
@@ -34,47 +31,47 @@ public final class Movie implements Parcelable {
 
     @Expose
     @SerializedName("original_language")
-    @StorIOSQLiteColumn(name = "original_language")
-    String originalLanguage;
+    //@StorIOSQLiteColumn(name = "original_language")
+            String originalLanguage;
 
     @Expose
     @SerializedName("original_title")
-    @StorIOSQLiteColumn(name = "original_title")
-    String originalTitle;
+    //@StorIOSQLiteColumn(name = "original_title")
+            String originalTitle;
 
     @Expose
-    @StorIOSQLiteColumn(name = "overview")
-    String overview;
+    //@StorIOSQLiteColumn(name = "overview")
+            String overview;
 
     @Expose
     @SerializedName("release_date")
-    @StorIOSQLiteColumn(name = "release_date")
-    String releaseDate;
+    //@StorIOSQLiteColumn(name = "release_date")
+            String releaseDate;
 
     @Expose
     @SerializedName("poster_path")
-    @StorIOSQLiteColumn(name = "poster_path")
-    String posterPath;
+    //@StorIOSQLiteColumn(name = "poster_path")
+            String posterPath;
 
     @Expose
     Double popularity;
 
     @Expose
-    @StorIOSQLiteColumn(name = "title")
-    String title;
+    //@StorIOSQLiteColumn(name = "title")
+            String title;
 
     @Expose
     Boolean video;
 
     @Expose
     @SerializedName("vote_average")
-    @StorIOSQLiteColumn(name = "voteAverage")
-    Double voteAverage;
+    //@StorIOSQLiteColumn(name = "voteAverage")
+            Double voteAverage;
 
     @Expose
     @SerializedName("vote_count")
-    @StorIOSQLiteColumn(name = "voteCount")
-    Integer voteCount;
+    //@StorIOSQLiteColumn(name = "voteCount")
+            Integer voteCount;
 
     public Movie() {}
 

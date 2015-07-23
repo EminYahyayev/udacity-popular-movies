@@ -19,7 +19,7 @@ import retrofit.http.Query;
 import rx.Observable;
 
 
-public final class MockMoviesService implements MoviesService {
+public final class MockMovieDB implements MovieDB {
 
     private static final Random sRandom = new Random();
     private static final int PAGE_SIZE = 20;
@@ -29,7 +29,7 @@ public final class MockMoviesService implements MoviesService {
     private final Integer mTotalMoviePages;
     private final int[] mGenreIds;
 
-    public MockMoviesService(Application application) {
+    public MockMovieDB(Application application) {
         mApplication = application;
         mGenreIds = application.getResources().getIntArray(R.array.genre_ids);
 
@@ -43,6 +43,10 @@ public final class MockMoviesService implements MoviesService {
 
     @Override public Observable<Movie.Response> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page) {
         return Observable.just(mockMovieResponse(page)).timeout(1 + sRandom.nextInt(3), TimeUnit.SECONDS);
+    }
+
+    @Override public Observable<Movie.Response> discoverMovies(@Query("sort_by") Sort sort, @Query("page") Integer page, @Query("include_adult") boolean includeAdult) {
+        return discoverMovies(sort, page);
     }
 
     @Override public Observable<Video.Response> videos(@Path("id") Integer id) {

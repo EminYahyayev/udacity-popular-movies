@@ -15,40 +15,52 @@ import com.ewintory.udacity.popularmovies.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public final class MessageView extends LinearLayout {
+/**
+ * @attr ref android.R.styleable#AnimatorStateView_messageText
+ * @attr ref android.R.styleable#AnimatorStateView_messageImage
+ */
+public final class AnimatorStateView extends LinearLayout {
 
     @Bind(R.id.message_view_text) TextView mTextView;
     @Bind(R.id.message_view_image) ImageView mImageView;
 
     private View mRoot;
 
-    private MessageView(Context context) {
+    private AnimatorStateView(Context context) {
         super(context, null, 0);
         initialize(context, null, 0);
     }
 
-    public MessageView(Context context, AttributeSet attrs) {
+    public AnimatorStateView(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
         initialize(context, attrs, 0);
     }
 
-    private MessageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    private AnimatorStateView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context, attrs, defStyleAttr);
     }
 
     private void initialize(Context context, AttributeSet attrs, int defStyle) {
-        mRoot = LayoutInflater.from(context).inflate(R.layout.view_message, this, true);
+        mRoot = LayoutInflater.from(context).inflate(R.layout.widget_animator_state, this, true);
         ButterKnife.bind(this, mRoot);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MessageView, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnimatorStateView, defStyle, 0);
 
-        String text = a.getString(R.styleable.MessageView_messageText);
-        Drawable image = a.getDrawable(R.styleable.MessageView_messageImage);
+        String text = a.getString(R.styleable.AnimatorStateView_messageText);
+        Drawable image = a.getDrawable(R.styleable.AnimatorStateView_messageImage);
 
         mTextView.setText(text);
         mImageView.setImageDrawable(image);
 
         a.recycle();
+    }
+
+    public void setMessageText(CharSequence text) {
+        mTextView.setText(text);
+    }
+
+    public void setMessageImage(Drawable drawable) {
+        mImageView.setImageDrawable(drawable);
     }
 }

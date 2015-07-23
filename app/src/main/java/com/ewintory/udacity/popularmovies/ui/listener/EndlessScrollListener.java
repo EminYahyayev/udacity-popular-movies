@@ -85,8 +85,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     public static EndlessScrollListener fromGridLayoutManager(
             @NonNull final GridLayoutManager layoutManager,
             int visibleThreshold,
-            int startPage,
-            @NonNull OnLoadMoreCallback callback) {
+            int startPage) {
 
         return new EndlessScrollListener(visibleThreshold, startPage) {
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -98,6 +97,6 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
 
                 onScrolled(firstVisibleItem, lastVisibleItem - firstVisibleItem, totalItemCount);
             }
-        }.setCallback(callback);
+        };
     }
 }

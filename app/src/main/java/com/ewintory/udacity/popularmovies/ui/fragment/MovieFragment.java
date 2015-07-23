@@ -23,7 +23,7 @@ import butterknife.Bind;
 import timber.log.Timber;
 
 public final class MovieFragment extends BaseFragment {
-    public static final String TAG = MoviesFragment.class.getSimpleName();
+    public static final String TAG = SortedMoviesFragment.class.getSimpleName();
 
     @Inject Picasso mPicasso;
 

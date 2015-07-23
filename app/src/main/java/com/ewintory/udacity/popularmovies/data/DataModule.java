@@ -4,6 +4,7 @@ import android.app.Application;
 import android.net.Uri;
 
 import com.ewintory.udacity.popularmovies.data.api.ApiModule;
+import com.ewintory.udacity.popularmovies.data.db.DbModule;
 import com.ewintory.udacity.popularmovies.utils.MoviesGlideModule;
 import com.ewintory.udacity.popularmovies.utils.MoviesHelper;
 import com.google.gson.Gson;
@@ -25,7 +26,10 @@ import timber.log.Timber;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Module(
-        includes = ApiModule.class,
+        includes = {
+                ApiModule.class,
+                DbModule.class
+        },
         injects = {
                 MoviesGlideModule.class
         },
@@ -33,19 +37,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
         library = true
 )
 public final class DataModule {
-    public static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 100MB
-
-//    @Provides @Singleton public StorIOSQLite provideStorIOSQLite(@NonNull SQLiteOpenHelper sqLiteOpenHelper) {
-//        return DefaultStorIOSQLite.builder()
-//                .sqliteOpenHelper(sqLiteOpenHelper)
-//                .addTypeMapping(Movie.class, SQLiteTypeMapping.<Movie>builder()
-//                        .putResolver(new MovieStorIOSQLitePutResolver())
-//                        .getResolver(new MovieStorIOSQLiteGetResolver())
-//                        .deleteResolver(new MovieStorIOSQLiteDeleteResolver())
-//                        .build())
-//                .build();
-//    }
-
+    public static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
 
     @Provides @Singleton Gson provideGson() {
         return new GsonBuilder().create();

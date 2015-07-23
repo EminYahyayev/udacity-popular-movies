@@ -45,7 +45,7 @@ public final class ApiModule {
                 .build();
     }
 
-    @Provides @Singleton MoviesService provideMoviesService(RestAdapter restAdapter) {
-        return restAdapter.create(MoviesService.class);
+    @Provides @Singleton MovieDB provideMoviesService(RestAdapter restAdapter) {
+        return restAdapter.create(MovieDB.class);
     }
 }
