@@ -11,7 +11,7 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 
-public interface MovieDB {
+public interface MoviesApi {
 
     @GET("/genre/movie/list") Observable<GenreMetadata.Response> genres();
 

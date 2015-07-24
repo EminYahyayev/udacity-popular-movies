@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="BaseTheme">
+        <attr name="photoItemForeground" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="AspectLockedFrameLayout">
         <attr name="aspectRatio" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AspectLockedImageView">
+        <attr name="imageAspectRatio" format="dimension"  />
     </declare-styleable>
 
     <declare-styleable name="AnimatorStateView">

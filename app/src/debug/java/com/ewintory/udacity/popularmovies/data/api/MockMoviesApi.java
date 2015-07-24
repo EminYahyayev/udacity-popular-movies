@@ -20,7 +20,7 @@ import retrofit.http.Query;
 import rx.Observable;
 
 
-public final class MockMovieDB implements MovieDB {
+public final class MockMoviesApi implements MoviesApi {
 
     private static final Random sRandom = new Random();
     private static final int PAGE_SIZE = 20;
@@ -30,7 +30,7 @@ public final class MockMovieDB implements MovieDB {
     private final Integer mTotalMoviePages;
     private final int[] mGenreIds;
 
-    public MockMovieDB(Application application) {
+    public MockMoviesApi(Application application) {
         mApplication = application;
         mGenreIds = application.getResources().getIntArray(R.array.genre_ids);
 

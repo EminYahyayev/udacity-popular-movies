@@ -15,12 +15,10 @@ import com.bumptech.glide.Glide;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
-import com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout;
+import com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView;
 import com.ewintory.udacity.popularmovies.utils.Lists;
 import com.ewintory.udacity.popularmovies.utils.MoviesHelper;
-import com.ewintory.udacity.popularmovies.utils.ResourceUtils;
 import com.ewintory.udacity.popularmovies.utils.StringUtils;
-import com.github.florent37.glidepalette.BitmapPalette;
 import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
     @NonNull private MovieClickListener mListener = MovieClickListener.DUMMY;
 
     public MoviesAdapter(@NonNull Fragment fragment) {
-        this(fragment, new ArrayList<Movie>());
+        this(fragment, new ArrayList<>());
     }
 
     public MoviesAdapter(@NonNull Fragment fragment, @NonNull List<Movie> movies) {
@@ -72,15 +70,17 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
 
         @Bind(R.id.movie_item_container) View mContentContainer;
         @Bind(R.id.movie_item_image) ImageView mImageView;
-        @Bind(R.id.movie_item_image_container) AspectLockedFrameLayout mImageContainer;
         @Bind(R.id.movie_item_title) TextView mTitle;
         @Bind(R.id.movie_item_genre) TextView mGenre;
         @Bind(R.id.movie_item_footer) View mFooter;
         @Bind(R.id.movie_item_btn_favorite) ImageButton mFavoriteButton;
 
         @BindColor(R.color.theme_primary) int mColorBackground;
-        @BindColor(R.color.body_text_1_inverse) int mColorBodyText1;
-        @BindColor(R.color.body_text_2_inverse) int mColorBodyText2;
+        @BindColor(R.color.body_text_white) int mColorTextTitle;
+        @BindColor(R.color.body_text_1_inverse) int mColorTextSubtitle;
+
+        private long mMovieId;
+        private Palette.Swatch mSwatch;
 
         public MovieHolder(View view) {
             super(view);
@@ -88,18 +88,11 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
         }
 
         public void bind(@NonNull final Movie movie) {
-            mImageContainer.setAspectRatio(ResourceUtils.getFloatDimension(mFragment.getResources(), R.dimen.movie_item_image_aspect_ratio));
+            mContentContainer.setOnClickListener(view -> mListener.onContentClicked(movie, view, mSwatch));
 
-            mContentContainer.setOnClickListener(view -> mListener.onContentClicked(movie, view));
-
-            mFavoriteButton.setImageResource(movie.isFavored()
-                    ? R.drawable.ic_favorite_full
-                    : R.drawable.ic_favorite_border);
-
+            mFavoriteButton.setSelected(movie.isFavored());
             mFavoriteButton.setOnClickListener(view -> {
-                mFavoriteButton.setImageResource(!movie.isFavored()
-                        ? R.drawable.ic_favorite_full
-                        : R.drawable.ic_favorite_border);
+                mFavoriteButton.setSelected(!movie.isFavored());
                 mListener.onFavoredClicked(movie);
             });
 
@@ -109,28 +102,31 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
             if (!Lists.isEmpty(genreIds))
                 mGenre.setText(StringUtils.join(mMoviesHelper.getGenreNames(genreIds), ", "));
 
-            resetColors();
+            // prevents unnecessary color blinking
+            if (mMovieId != movie.getId()) {
+                resetColors();
+                mMovieId = movie.getId();
+            }
+
             Glide.with(mFragment)
                     .load(movie.getPosterPath())
                     .placeholder(R.color.movie_image_placeholder)
                     .crossFade()
-                    .listener(GlidePalette.with(movie.getPosterPath()).intoCallBack(new BitmapPalette.CallBack() {
-                        @Override public void onPaletteLoaded(Palette palette) {
-                            applyColors(palette.getVibrantSwatch());
-                        }
-                    }))
+                    .listener(GlidePalette.with(movie.getPosterPath())
+                            .intoCallBack(palette -> applyColors(palette.getVibrantSwatch())))
                     .into(mImageView);
         }
 
         private void resetColors() {
             mFooter.setBackgroundColor(mColorBackground);
-            mTitle.setTextColor(mColorBodyText1);
-            mGenre.setTextColor(mColorBodyText2);
-            mFavoriteButton.setColorFilter(mColorBodyText1, PorterDuff.Mode.MULTIPLY);
+            mTitle.setTextColor(mColorTextTitle);
+            mGenre.setTextColor(mColorTextSubtitle);
+            mFavoriteButton.setColorFilter(mColorTextTitle, PorterDuff.Mode.MULTIPLY);
         }
 
         private void applyColors(Palette.Swatch swatch) {
             if (swatch != null) {
+                mSwatch = swatch;
                 mFooter.setBackgroundColor(swatch.getRgb());
                 mTitle.setTextColor(swatch.getBodyTextColor());
                 mGenre.setTextColor(swatch.getTitleTextColor());

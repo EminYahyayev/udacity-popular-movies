@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/theme_accent_1</item>
 
         <item name="android:windowBackground">@color/gray_background</item>
+        <item name="photoItemForeground">?android:selectableItemBackground</item>
     </style>
 
     <style name="Theme.PopularMovies" parent="Theme.PopularMovies.Base" />

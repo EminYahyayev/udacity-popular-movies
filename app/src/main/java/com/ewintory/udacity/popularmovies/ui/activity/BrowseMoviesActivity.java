@@ -3,7 +3,9 @@ package com.ewintory.udacity.popularmovies.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -109,7 +111,7 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
     }
 
     @Override
-    public void onMovieSelected(@NonNull Movie movie, View view) {
+    public void onMovieSelected(@NonNull Movie movie, View view, @Nullable Palette.Swatch swatch) {
         Timber.d(String.format("Movie '%s' selected", movie.getTitle()));
         if (mTwoPane) {
             MovieFragment fragment = MovieFragment.newInstance(movie);
@@ -142,11 +144,11 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
             return;
 
         mSpinnerAdapter.clear();
-        mSpinnerAdapter.addItem(MODE_FAVORITES, getString(R.string.menu_sort_favorites), false);
-        mSpinnerAdapter.addHeader(getString(R.string.menu_sort));
-        mSpinnerAdapter.addItem(Sort.POPULARITY.toString(), getString(R.string.menu_sort_popularity), false);
-        mSpinnerAdapter.addItem(Sort.VOTE_COUNT.toString(), getString(R.string.menu_sort_vote_count), false);
-        mSpinnerAdapter.addItem(Sort.VOTE_AVERAGE.toString(), getString(R.string.menu_sort_vote_average), false);
+        mSpinnerAdapter.addItem(MODE_FAVORITES, getString(R.string.mode_favored), false);
+        mSpinnerAdapter.addHeader(getString(R.string.mode_sort));
+        mSpinnerAdapter.addItem(Sort.POPULARITY.toString(), getString(R.string.mode_sort_popularity), false);
+        mSpinnerAdapter.addItem(Sort.VOTE_COUNT.toString(), getString(R.string.mode_sort_vote_count), false);
+        mSpinnerAdapter.addItem(Sort.VOTE_AVERAGE.toString(), getString(R.string.mode_sort_vote_average), false);
 
         int itemToSelect = -1;
 

@@ -5,7 +5,6 @@ import android.support.annotation.IdRes;
 
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import rx.Subscription;
@@ -14,7 +13,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
 
-public class FavoredMoviesFragment extends MoviesFragment {
+public final class FavoredMoviesFragment extends MoviesFragment {
 
     private static final String FAVORED_QUERY = "SELECT * FROM " + Movie.TABLE
             + " WHERE " + Movie.FAVORED + " = ?";

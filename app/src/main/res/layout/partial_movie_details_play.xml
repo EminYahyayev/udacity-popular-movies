@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView android:id="@+id/movie_details_poster_play"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:contentDescription="@string/movie_details_trailer_desc"
+    android:src="@drawable/ic_play_circle_filled_black_48dp"
+    tools:showIn="@layout/fragment_movie" />

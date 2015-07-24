@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,13 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ewintory.udacity.popularmovies.R;
-import com.ewintory.udacity.popularmovies.data.api.MovieDB;
+import com.ewintory.udacity.popularmovies.data.api.MoviesApi;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 import com.ewintory.udacity.popularmovies.ui.adapter.MoviesAdapter;
 import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
 import com.ewintory.udacity.popularmovies.ui.module.MoviesModule;
 import com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator;
 import com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout;
+import com.ewintory.udacity.popularmovies.utils.PrefUtils;
 import com.squareup.sqlbrite.BriteDatabase;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public abstract class MoviesFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener, MultiSwipeRefreshLayout.CanChildScrollUpCallback, MovieClickListener {
 
     public interface Listener {
-        void onMovieSelected(Movie movie, View view);
+        void onMovieSelected(Movie movie, View view, @Nullable Palette.Swatch swatch);
     }
 
     private static final String STATE_MOVIES = "state_movies";
@@ -48,7 +51,7 @@ public abstract class MoviesFragment extends BaseFragment implements
     protected static final int ANIMATOR_VIEW_EMPTY = R.id.view_empty;
 
     @Inject BriteDatabase db;
-    @Inject MovieDB movieDB;
+    @Inject MoviesApi mMoviesApi;
 
     @Bind(R.id.multi_swipe_refresh_layout) MultiSwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.movies_animator) BetterViewAnimator mViewAnimator;
@@ -102,7 +105,7 @@ public abstract class MoviesFragment extends BaseFragment implements
 
     @Override
     public void onDetach() {
-        listener = (movie, view) -> {};
+        listener = (movie, view, swatch) -> {};
         mMoviesAdapter.setListener(MovieClickListener.DUMMY);
         super.onDetach();
     }
@@ -124,8 +127,8 @@ public abstract class MoviesFragment extends BaseFragment implements
     public abstract void onRefresh();
 
     @Override
-    public void onContentClicked(Movie movie, View view) {
-        listener.onMovieSelected(movie, view);
+    public void onContentClicked(@NonNull Movie movie, View view, @Nullable Palette.Swatch swatch) {
+        listener.onMovieSelected(movie, view, swatch);
     }
 
     @Override
@@ -135,8 +138,12 @@ public abstract class MoviesFragment extends BaseFragment implements
 
         movie.setFavored(!wasFavored);
         if (wasFavored) {
-            db.delete(Movie.TABLE, "_ID=?", movie.getId() + "");
+            PrefUtils.removeFromFavorites(getActivity(), movie.getId());
+            db.update(Movie.TABLE, new Movie.Builder()
+                    .movie(movie)
+                    .build(), "_ID=?", movie.getId() + "");
         } else {
+            PrefUtils.addToFavorites(getActivity(), movie.getId());
             db.insert(Movie.TABLE, new Movie.Builder()
                     .movie(movie)
                     .build());

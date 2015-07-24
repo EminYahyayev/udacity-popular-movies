@@ -6,6 +6,9 @@ import android.preference.PreferenceManager;
 
 import com.ewintory.udacity.popularmovies.data.api.Sort;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Utilities and constants related to app preferences.
@@ -17,7 +20,7 @@ public final class PrefUtils {
      */
     public static final String PREF_WELCOME_DONE = "pref_welcome_done";
 
-    public static final String PREF_MOVIES_SORT = "pref_movies_sort";
+    public static final String PREF_FAVORED_MOVIES = "pref_browse_movies_mode";
 
     public static final String PREF_BROWSE_MOVIES_MODE = "pref_browse_movies_mode";
 
@@ -33,15 +36,18 @@ public final class PrefUtils {
         sp.edit().putBoolean(PREF_WELCOME_DONE, true).apply();
     }
 
-    public static Sort getMoviesSort(final Context context) {
+    public static void addToFavorites(final Context context, long movieId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        String sort = sp.getString(PREF_MOVIES_SORT, Sort.POPULARITY.toString());
-        return Sort.fromString(sort);
+        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, new HashSet<>());
+        set.add(String.valueOf(movieId));
+        sp.edit().putStringSet(PREF_FAVORED_MOVIES, set).apply();
     }
 
-    public static void setMoviesSort(final Context context, Sort sort) {
+    public static void removeFromFavorites(final Context context, long movieId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(PREF_MOVIES_SORT, sort.toString()).apply();
+        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, new HashSet<>());
+        set.remove(String.valueOf(movieId));
+        sp.edit().putStringSet(PREF_FAVORED_MOVIES, set).apply();
     }
 
     public static String getBrowseMoviesMode(final Context context) {

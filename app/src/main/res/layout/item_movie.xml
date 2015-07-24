@@ -2,31 +2,28 @@
     android:id="@+id/movie_item_container"
     style="@style/MovieItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_margin="@dimen/item_spacing_full">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout
-            android:id="@+id/movie_item_image_container"
+        <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView
+            android:id="@+id/movie_item_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/movie_item_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/movie_image_desc"
-                android:scaleType="centerCrop"
-                android:src="@color/movie_image_placeholder" />
-
-        </com.ewintory.udacity.popularmovies.ui.widget.AspectLockedFrameLayout>
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/movie_image_desc"
+            android:scaleType="centerCrop"
+            android:src="@color/movie_image_placeholder"
+            app:imageAspectRatio="@dimen/movie_item_image_aspect_ratio"
+            tools:layout_width="300dp"
+            tools:src="@drawable/placeholder_movie_item_image" />
 
         <LinearLayout
             android:id="@+id/movie_item_footer"
@@ -50,7 +47,7 @@
                     android:id="@+id/movie_item_title"
                     style="@style/MovieItemText"
                     android:lines="1"
-                    android:textColor="@color/body_text_1_inverse"
+                    android:textColor="@color/body_text_white"
                     android:textSize="@dimen/text_size_large"
                     android:textStyle="bold"
                     tools:text="Jurassic World" />
@@ -58,7 +55,7 @@
                 <TextView
                     android:id="@+id/movie_item_genre"
                     style="@style/MovieItemText"
-                    android:textColor="@color/body_text_2_inverse"
+                    android:textColor="@color/body_text_1_inverse"
                     android:textSize="@dimen/text_size_medium"
                     tools:text="Action" />
 
@@ -67,8 +64,7 @@
             <ImageButton
                 android:id="@+id/movie_item_btn_favorite"
                 style="@style/FavoriteButton"
-                android:contentDescription="@string/movie_item_btn_favorite_desc"
-                android:src="@drawable/ic_favorite_border" />
+                android:contentDescription="@string/movie_item_btn_favorite_desc" />
 
         </LinearLayout>
 

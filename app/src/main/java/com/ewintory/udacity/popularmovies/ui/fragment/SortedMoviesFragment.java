@@ -157,7 +157,7 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
 
     private void pullPage(int page) {
         Timber.d(String.format("Page %d is loading.", page));
-        mItemsObservableSubject.onNext(movieDB.discoverMovies(mSort, page, mIncludeAdult));
+        mItemsObservableSubject.onNext(mMoviesApi.discoverMovies(mSort, page, mIncludeAdult));
     }
 
 

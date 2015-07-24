@@ -18,14 +18,19 @@
     <dimen name="toolbar_elevation">8dp</dimen>
 
     <!-- Browse Movies -->
-    <item name="movie_item_image_aspect_ratio" format="float" type="dimen">0.675</item>
+    <item name="movie_item_image_aspect_ratio" format="float" type="dimen">.675</item>
     <dimen name="spinner_left_padding">0dp</dimen>
     <dimen name="spinner_drawable_padding">16dp</dimen>
     <dimen name="explore_spinner_width">200dp</dimen>
     <dimen name="explore_dropdown_item_height">48dp</dimen>
 
     <!-- Movie Details -->
-    <item name="movie_details_image_aspect_ratio" format="float" type="dimen">1.77</item>
+    <item name="movie_details_cover_aspect_ratio" format="float" type="dimen">1.77</item>
+    <dimen name="movie_details_responsive_width">@dimen/match_parent</dimen>
+    <dimen name="movie_details_content_margin_bottom">0dp</dimen>
+    <dimen name="movie_details_poster_width">150dp</dimen>
+    <dimen name="movie_details_poster_top_margin">-16dp</dimen>
+    <dimen name="movie_details_poster_left_margin">16dp</dimen>
 
     <!-- Common -->
     <dimen name="item_spacing_half">2dp</dimen>
@@ -34,5 +39,8 @@
     <dimen name="content_padding_normal">16dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="item_load_more_size">48dp</dimen>
+    <dimen name="flexible_space_image_height">300dp</dimen>
+    <item name="match_parent" type="dimen">-1</item>
+    <item name="wrap_content" type="dimen">-2</item>
 
 </resources>

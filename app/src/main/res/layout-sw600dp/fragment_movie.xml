@@ -1,0 +1,138 @@
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    android:id="@+id/scroll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:padding="@dimen/item_spacing_full">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
+
+        <FrameLayout
+            android:id="@+id/movie_details_cover_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?photoItemForeground">
+
+            <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView
+                android:id="@+id/movie_details_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/movie_image_placeholder"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:imageAspectRatio="@dimen/movie_details_cover_aspect_ratio"
+                tools:src="@drawable/placeholder_movie_details_image" />
+
+            <include layout="@layout/partial_movie_details_play" />
+
+        </FrameLayout>
+
+        <include
+            android:id="@+id/anchor"
+            layout="@layout/partial_movie_details_anchor" />
+
+        <LinearLayout
+            android:layout_width="@dimen/movie_details_responsive_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/anchor"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/movie_details_content_margin_bottom"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
+
+                <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView
+                    android:id="@+id/movie_details_poster"
+                    android:layout_width="@dimen/movie_details_poster_width"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/keyline_1"
+                    android:layout_marginLeft="@dimen/movie_details_poster_left_margin"
+                    android:layout_marginStart="@dimen/movie_details_poster_left_margin"
+                    android:layout_marginTop="@dimen/movie_details_poster_top_margin"
+                    android:contentDescription="@null"
+                    app:imageAspectRatio="@dimen/movie_item_image_aspect_ratio"
+                    tools:src="@drawable/placeholder_movie_item_image" />
+
+                <ImageButton
+                    android:id="@+id/movie_details_favorite_button"
+                    style="@style/FavoriteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/movie_item_btn_favorite_desc"
+                    android:tint="@color/theme_primary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/movie_details_poster"
+                    android:layout_toLeftOf="@id/movie_details_favorite_button"
+                    android:layout_toRightOf="@id/movie_details_poster"
+                    android:layout_toStartOf="@id/movie_details_favorite_button"
+                    android:orientation="vertical"
+                    android:padding="@dimen/keyline_1">
+
+                    <TextView
+                        android:id="@+id/movie_details_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/body_text_1"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="Jurassic Park" />
+
+
+                    <TextView
+                        android:id="@+id/movie_details_release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/body_text_2"
+                        android:textSize="@dimen/text_size_medium"
+                        tools:text="February 2013" />
+
+                    <TextView
+                        android:id="@+id/movie_details_average_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/body_text_2"
+                        android:textSize="@dimen/text_size_medium"
+                        tools:text="Rating: 8/10" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/list_dropdown_divider_color" />
+
+            <TextView
+                android:id="@+id/movie_details_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/keyline_1"
+                android:textSize="@dimen/text_size_medium"
+
+                tools:text="@string/placeholder_ipsum" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

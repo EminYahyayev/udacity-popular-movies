@@ -11,13 +11,19 @@
     <string name="view_error_message">This content is not available offline.</string>
 
     <!-- Browse Movies-->
+    <string name="mode_favored">Favored</string>
+    <string name="mode_sort">Sorting</string>
+    <string name="mode_sort_popularity">Most popular</string>
+    <string name="mode_sort_vote_average">Most popular</string>
+    <string name="mode_sort_vote_count">Most popular</string>
+
     <string name="movie_image_desc">Movie image</string>
     <string name="movie_poster_desc">Movie poster</string>
     <string name="menu_sort">Sorting</string>
     <string name="menu_sort_popularity">Most popular</string>
     <string name="menu_sort_vote_average">Highest rated</string>
     <string name="menu_sort_vote_count">Most rated</string>
-    <string name="menu_sort_favorites">Favorites</string>
+    <string name="menu_sort_favorites">Favored</string>
 
     <string name="favored_empty_message">You have no favored movies yet.</string>
     <string name="favored_error_message">Loading failed, please try again.</string>
@@ -32,5 +38,6 @@
     <string name="pref_include_adult_title">Include adult</string>
     <string name="pref_include_adult_description">Toggle the inclusion of adult movies.</string>
     <string name="menu_settings">Settings</string>
+    <string name="movie_details_trailer_desc">Play the trailer</string>
 
 </resources>
