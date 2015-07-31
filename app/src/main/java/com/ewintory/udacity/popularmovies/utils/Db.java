@@ -2,11 +2,6 @@ package com.ewintory.udacity.popularmovies.utils;
 
 import android.database.Cursor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import hugo.weaving.DebugLog;
-
 public final class Db {
     public static final int BOOLEAN_FALSE = 0;
     public static final int BOOLEAN_TRUE = 1;
