@@ -3,8 +3,10 @@ package com.ewintory.udacity.popularmovies.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ewintory.udacity.popularmovies.MoviesApp;
 import com.squareup.leakcanary.RefWatcher;
@@ -28,6 +30,7 @@ import rx.android.app.AppObservable;
 public abstract class BaseFragment extends Fragment {
 
     private ObjectGraph mObjectGraph;
+    private Toast mToast;
 
     @CallSuper
     @Override public void onAttach(Activity activity) {
@@ -60,6 +63,18 @@ public abstract class BaseFragment extends Fragment {
             mObjectGraph = MoviesApp.get(activity).buildScopedObjectGraph(modules);
             mObjectGraph.inject(this);
         }
+    }
+
+    protected void showToast(String message) {
+        if (mToast != null) mToast.cancel();
+        mToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+    protected void showToast(@StringRes int resId) {
+        if (mToast != null) mToast.cancel();
+        mToast = Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT);
+        mToast.show();
     }
 
     protected List<Object> getModules() {

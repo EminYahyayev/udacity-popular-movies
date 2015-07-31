@@ -41,6 +41,7 @@ public final class MoviesApp extends Application {
 
     protected RefWatcher installLeakCanary() {
         return LeakCanary.install(this);
+        //return RefWatcher.DISABLED;
     }
 
     private ObjectGraph initializeObjectGraph() {

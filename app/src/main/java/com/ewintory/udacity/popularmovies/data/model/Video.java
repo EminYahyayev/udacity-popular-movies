@@ -1,17 +1,23 @@
 package com.ewintory.udacity.popularmovies.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public final class Video {
+public final class Video implements Parcelable {
+
+    public static final String SITE_YOUTUBE = "YouTube";
+    public static final String TYPE_TRAILER = "Trailer";
+
     @Expose
     private String id;
     @SerializedName("iso_639_1")
     @Expose
-    private String iso6391;
+    private String iso;
     @Expose
     private String key;
     @Expose
@@ -19,142 +25,121 @@ public final class Video {
     @Expose
     private String site;
     @Expose
-    private Integer size;
+    private int size;
     @Expose
     private String type;
 
-    /**
-     * @return The id
-     */
+    public Video() {}
+
     public String getId() {
         return id;
     }
 
-    /**
-     * @param id The id
-     */
-    public void setId(String id) {
+    public Video setId(String id) {
         this.id = id;
+        return this;
     }
 
-    /**
-     * @return The iso6391
-     */
-    public String getIso6391() {
-        return iso6391;
+    public String getIso() {
+        return iso;
     }
 
-    /**
-     * @param iso6391 The iso_639_1
-     */
-    public void setIso6391(String iso6391) {
-        this.iso6391 = iso6391;
+    public Video setIso(String iso) {
+        this.iso = iso;
+        return this;
     }
 
-    /**
-     * @return The key
-     */
     public String getKey() {
         return key;
     }
 
-    /**
-     * @param key The key
-     */
-    public void setKey(String key) {
+    public Video setKey(String key) {
         this.key = key;
+        return this;
     }
 
-    /**
-     * @return The name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name The name
-     */
-    public void setName(String name) {
+    public Video setName(String name) {
         this.name = name;
+        return this;
     }
 
-    /**
-     * @return The site
-     */
     public String getSite() {
         return site;
     }
 
-    /**
-     * @param site The site
-     */
-    public void setSite(String site) {
+    public Video setSite(String site) {
         this.site = site;
+        return this;
     }
 
-    /**
-     * @return The size
-     */
-    public Integer getSize() {
+    public int getSize() {
         return size;
     }
 
-    /**
-     * @param size The size
-     */
-    public void setSize(Integer size) {
+    public Video setSize(int size) {
         this.size = size;
+        return this;
     }
 
-    /**
-     * @return The type
-     */
     public String getType() {
         return type;
     }
 
-    /**
-     * @param type The type
-     */
-    public void setType(String type) {
+    public Video setType(String type) {
         this.type = type;
+        return this;
     }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", site='" + site + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+    // --------------------------------------------------------------------------------------
+
+    @Override public int describeContents() { return 0; }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.iso);
+        dest.writeString(this.key);
+        dest.writeString(this.name);
+        dest.writeString(this.site);
+        dest.writeInt(this.size);
+        dest.writeString(this.type);
+    }
+
+    protected Video(Parcel in) {
+        this.id = in.readString();
+        this.iso = in.readString();
+        this.key = in.readString();
+        this.name = in.readString();
+        this.site = in.readString();
+        this.size = in.readInt();
+        this.type = in.readString();
+    }
+
+    public static final Creator<Video> CREATOR = new Creator<Video>() {
+        public Video createFromParcel(Parcel source) {return new Video(source);}
+
+        public Video[] newArray(int size) {return new Video[size];}
+    };
 
     public static final class Response {
 
         @Expose
-        private Integer id;
-        @Expose
-        private List<Video> videos = new ArrayList<>();
+        public long id;
 
-        /**
-         * @return The id
-         */
-        public Integer getId() {
-            return id;
-        }
-
-        /**
-         * @param id The id
-         */
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        /**
-         * @return The results
-         */
-        public List<Video> getVideos() {
-            return videos;
-        }
-
-        /**
-         * @param videos The results
-         */
-        public void setVideos(List<Video> videos) {
-            this.videos = videos;
-        }
+        @Expose @SerializedName("results")
+        public List<Video> videos;
 
     }
 }

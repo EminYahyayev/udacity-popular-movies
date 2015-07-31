@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <TextView
+        android:id="@+id/review_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="@dimen/keyline_1"
+        android:layout_marginLeft="@dimen/keyline_1"
+        android:layout_marginRight="@dimen/keyline_1"
+        android:layout_marginStart="@dimen/keyline_1"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="@color/body_text_1"
+        android:textSize="16sp"
+        tools:text="John Doe" />
+
+    <TextView
+        android:id="@+id/review_content"
+        style="@style/MovieDetailTextBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/review_author"
+        android:layout_alignLeft="@id/review_author"
+        android:layout_alignRight="@id/review_author"
+        android:layout_alignStart="@id/review_author"
+        android:layout_below="@id/review_author"
+        android:textColor="@color/body_text_2"
+        tools:text="@string/placeholder_ipsum" />
+
+</RelativeLayout>

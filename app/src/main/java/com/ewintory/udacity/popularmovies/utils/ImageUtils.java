@@ -34,7 +34,7 @@ public final class ImageUtils {
         else
             widthPath = "/w780";
 
-        Timber.v("buildPosterUrl: widthPath=" + widthPath);
+        //Timber.v("buildPosterUrl: widthPath=" + widthPath);
         return BASE_URL + widthPath + imagePath;
     }
 

@@ -20,7 +20,7 @@ public final class PrefUtils {
      */
     public static final String PREF_WELCOME_DONE = "pref_welcome_done";
 
-    public static final String PREF_FAVORED_MOVIES = "pref_browse_movies_mode";
+    public static final String PREF_FAVORED_MOVIES = "pref_favored_movies";
 
     public static final String PREF_BROWSE_MOVIES_MODE = "pref_browse_movies_mode";
 
@@ -38,14 +38,16 @@ public final class PrefUtils {
 
     public static void addToFavorites(final Context context, long movieId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, new HashSet<>());
+        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, null);
+        if (set == null) set = new HashSet<>();
         set.add(String.valueOf(movieId));
         sp.edit().putStringSet(PREF_FAVORED_MOVIES, set).apply();
     }
 
     public static void removeFromFavorites(final Context context, long movieId) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, new HashSet<>());
+        Set<String> set = sp.getStringSet(PREF_FAVORED_MOVIES, null);
+        if (set == null) set = new HashSet<>();
         set.remove(String.valueOf(movieId));
         sp.edit().putStringSet(PREF_FAVORED_MOVIES, set).apply();
     }

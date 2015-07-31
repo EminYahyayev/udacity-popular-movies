@@ -9,19 +9,12 @@ import android.widget.Toast;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.api.Sort;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.data.model.MoviesResponse;
 import com.ewintory.udacity.popularmovies.ui.listener.EndlessScrollListener;
 
 import java.util.List;
-import java.util.Set;
 
 import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
-import rx.subscriptions.CompositeSubscription;
-import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
 
 public final class SortedMoviesFragment extends MoviesFragment implements EndlessScrollListener.OnLoadMoreCallback {
@@ -30,21 +23,14 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
     private static final String STATE_CURRENT_PAGE = "state_current_page";
     private static final String STATE_IS_LOADING = "state_is_loading";
 
-    private static final String FAVORED_IDS_QUERY = "SELECT _ID FROM " + Movie.TABLE
-            + " WHERE " + Movie.FAVORED + " = ?";
-
     private static final int VISIBLE_THRESHOLD = 10;
 
-    protected Subscription mItemsSubscription = Subscriptions.empty();
-    protected CompositeSubscription mSubscriptions = new CompositeSubscription();
+    private EndlessScrollListener mEndlessScrollListener;
+    private BehaviorSubject<Observable<List<Movie>>> mItemsObservableSubject = BehaviorSubject.create();
 
-    private BehaviorSubject<Set<Long>> mFavoredMovieIdsSubject = BehaviorSubject.create();
-    private BehaviorSubject<Observable<MoviesResponse>> mItemsObservableSubject = BehaviorSubject.create();
     private Sort mSort;
     private int mCurrentPage = 0;
     private boolean mIsLoading = false;
-
-    private boolean mIncludeAdult = false;
 
     public static SortedMoviesFragment newInstance(@NonNull Sort sort) {
         Bundle args = new Bundle();
@@ -75,14 +61,17 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mSubscriptions.add(db.createQuery(Movie.TABLE, FAVORED_IDS_QUERY, "1")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(Movie.ID_MAP)
-                .doOnNext(set -> Timber.d(String.format("Favored ids loaded, %d items", set.size())))
-                .subscribe(mFavoredMovieIdsSubject));
+        // subscribe to global favored changes in order to synchronise movies from different views
+        mSubscriptions.add(mHelper.getFavoredObservable().subscribe(event -> {
+            int count = mMoviesAdapter.getItemCount();
+            for (int position = 0; position < count; position++) {
+                if (mMoviesAdapter.getItemId(position) == event.movieId) {
+                    mMoviesAdapter.notifyItemChanged(position);
+                }
+            }
+        }));
 
-        subscribeToContent();
+        subscribeToMovies();
         if (savedInstanceState == null)
             reloadContent();
     }
@@ -98,7 +87,6 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
     @Override
     public void onDestroyView() {
         mSubscriptions.unsubscribe();
-        mItemsSubscription.unsubscribe();
         super.onDestroyView();
     }
 
@@ -117,30 +105,22 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
         if (!mSwipeRefreshLayout.isRefreshing())
             mViewAnimator.setDisplayedChildId(ANIMATOR_VIEW_LOADING);
 
-        mRecyclerView.clearOnScrollListeners();
-        mRecyclerView.addOnScrollListener(buildOnScrollListener(mGridLayoutManager, mCurrentPage));
+        mSelectedPosition = -1;
+        reAddOnScrollListener(mGridLayoutManager, mCurrentPage = 0);
         pullPage(1);
     }
 
-    private void subscribeToContent() {
+    private void subscribeToMovies() {
         Timber.d("Subscribing to items");
-        mItemsSubscription.unsubscribe();
-        mItemsSubscription = bind(Observable.concat(mItemsObservableSubject))
-                .map(response -> {
+        mSubscriptions.add(bind(Observable.concat(mItemsObservableSubject))
+                .subscribe(movies -> {
                     mSwipeRefreshLayout.setRefreshing(false);
+                    mCurrentPage++;
 
-                    mCurrentPage = response.getPage();
-                    if (mCurrentPage == 1) mMoviesAdapter.clear();
-                    mMoviesAdapter.setLoadMore(!response.getTotalPages().equals(mCurrentPage));
-
-                    List<Movie> movies = response.getMovies();
                     Timber.d(String.format("Page %d is loaded, %d new items", mCurrentPage, movies.size()));
-                    return movies;
-                }).withLatestFrom(mFavoredMovieIdsSubject, (movies, favoredIds) -> {
-                    for (Movie movie : movies)
-                        movie.setFavored(favoredIds.contains(movie.getId()));
-                    return movies;
-                }).subscribe(movies -> {
+                    if (mCurrentPage == 1) mMoviesAdapter.clear();
+
+                    mMoviesAdapter.setLoadMore(!movies.isEmpty());
                     mMoviesAdapter.add(movies);
                     mViewAnimator.setDisplayedChildId(ANIMATOR_VIEW_CONTENT);
                 }, throwable -> {
@@ -151,26 +131,28 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
                         Toast.makeText(getActivity(), R.string.view_error_message, Toast.LENGTH_SHORT).show();
                     } else
                         mViewAnimator.setDisplayedChildId(ANIMATOR_VIEW_ERROR);
-                });
-
+                }));
     }
 
     private void pullPage(int page) {
         Timber.d(String.format("Page %d is loading.", page));
-        mItemsObservableSubject.onNext(mMoviesApi.discoverMovies(mSort, page, mIncludeAdult));
+        mItemsObservableSubject.onNext(mMoviesRepository.discoverMovies(mSort, page));
     }
 
 
     @Override
     protected void initRecyclerView() {
         super.initRecyclerView();
-        mRecyclerView.addOnScrollListener(buildOnScrollListener(mGridLayoutManager, mCurrentPage));
+        reAddOnScrollListener(mGridLayoutManager, mCurrentPage);
     }
 
-    private EndlessScrollListener buildOnScrollListener(GridLayoutManager layoutManager, int startPage) {
-        return EndlessScrollListener.fromGridLayoutManager(layoutManager, VISIBLE_THRESHOLD, startPage).setCallback(this);
-    }
+    private void reAddOnScrollListener(GridLayoutManager layoutManager, int startPage) {
+        if (mEndlessScrollListener != null)
+            mRecyclerView.removeOnScrollListener(mEndlessScrollListener);
 
+        mEndlessScrollListener = EndlessScrollListener.fromGridLayoutManager(layoutManager, VISIBLE_THRESHOLD, startPage).setCallback(this);
+        mRecyclerView.addOnScrollListener(mEndlessScrollListener);
+    }
 
 }
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/movie_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -16,29 +16,37 @@
             android:clipChildren="false">
 
             <FrameLayout
-                android:id="@+id/movie_details_cover_container"
+                android:id="@+id/movie_cover_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:foreground="?photoItemForeground">
 
                 <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView
-                    android:id="@+id/movie_details_cover"
+                    android:id="@+id/movie_cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/movie_image_placeholder"
+                    android:src="@color/movie_poster_placeholder"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     app:imageAspectRatio="@dimen/movie_details_cover_aspect_ratio"
                     tools:src="@drawable/placeholder_movie_details_image" />
 
-                <include layout="@layout/partial_movie_details_play" />
+                <ImageView
+                    android:id="@+id/movie_poster_play"
+                    style="@style/MovieDetailPlayImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/movie_details_trailer_desc"
+                    android:src="@drawable/ic_play_circle_filled_black_48dp"
+                    android:visibility="gone" />
 
             </FrameLayout>
 
-            <include
+            <View
                 android:id="@+id/anchor"
-                layout="@layout/partial_movie_details_anchor" />
+                style="@style/MovieDetailAnchor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/movie_details_anchor_height" />
 
             <LinearLayout
                 android:layout_width="@dimen/movie_details_responsive_width"
@@ -57,7 +65,7 @@
                     android:clipChildren="false">
 
                     <com.ewintory.udacity.popularmovies.ui.widget.AspectLockedImageView
-                        android:id="@+id/movie_details_poster"
+                        android:id="@+id/movie_poster"
                         android:layout_width="@dimen/movie_details_poster_width"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/keyline_1"
@@ -69,7 +77,7 @@
                         tools:src="@drawable/placeholder_movie_item_image" />
 
                     <ImageButton
-                        android:id="@+id/movie_details_favorite_button"
+                        android:id="@+id/movie_favorite_button"
                         style="@style/FavoriteButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -82,15 +90,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/movie_details_poster"
-                        android:layout_toLeftOf="@id/movie_details_favorite_button"
-                        android:layout_toRightOf="@id/movie_details_poster"
-                        android:layout_toStartOf="@id/movie_details_favorite_button"
+                        android:layout_toEndOf="@id/movie_poster"
+                        android:layout_toLeftOf="@id/movie_favorite_button"
+                        android:layout_toRightOf="@id/movie_poster"
+                        android:layout_toStartOf="@id/movie_favorite_button"
                         android:orientation="vertical"
                         android:padding="@dimen/keyline_1">
 
                         <TextView
-                            android:id="@+id/movie_details_title"
+                            android:id="@+id/movie_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/body_text_1"
@@ -100,7 +108,7 @@
 
 
                         <TextView
-                            android:id="@+id/movie_details_release_date"
+                            android:id="@+id/movie_release_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/body_text_2"
@@ -108,7 +116,7 @@
                             tools:text="February 2013" />
 
                         <TextView
-                            android:id="@+id/movie_details_average_rating"
+                            android:id="@+id/movie_average_rating"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/body_text_2"
@@ -125,13 +133,16 @@
                     android:background="@color/list_dropdown_divider_color" />
 
                 <TextView
-                    android:id="@+id/movie_details_overview"
+                    android:id="@+id/movie_overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/keyline_1"
                     android:textSize="@dimen/text_size_medium"
+                    tools:text="@string/placeholder_movie_plot" />
 
-                    tools:text="@string/placeholder_ipsum" />
+                <include layout="@layout/partial_movie_reviews" />
+
+                <include layout="@layout/partial_movie_videos" />
 
             </LinearLayout>
 

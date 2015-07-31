@@ -33,16 +33,12 @@ public final class ApiModule {
                 .setClient(new OkClient(client))
                 .setEndpoint(endpoint)
                 .setLogLevel(RestAdapter.LogLevel.NONE)
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override public void intercept(RequestFacade request) {
-                        request.addQueryParam("api_key", BuildConfig.MOVIE_DB_API_KEY);
-                    }
-                })
+                .setRequestInterceptor(request -> request.addQueryParam("api_key", BuildConfig.MOVIE_DB_API_KEY))
                 .setConverter(new GsonConverter(gson))
                 .build();
     }
 
-    @Provides @Singleton MoviesApi provideMovieDB(RestAdapter restAdapter) {
+    @Provides @Singleton MoviesApi provideMoviesApi(RestAdapter restAdapter) {
         return restAdapter.create(MoviesApi.class);
     }
 }

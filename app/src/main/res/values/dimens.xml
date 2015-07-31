@@ -31,6 +31,7 @@
     <dimen name="movie_details_poster_width">150dp</dimen>
     <dimen name="movie_details_poster_top_margin">-16dp</dimen>
     <dimen name="movie_details_poster_left_margin">16dp</dimen>
+    <dimen name="movie_details_anchor_height">@dimen/match_parent</dimen>
 
     <!-- Common -->
     <dimen name="item_spacing_half">2dp</dimen>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="movie_cover_placeholder">@color/material_red700</color>
+
+</resources>

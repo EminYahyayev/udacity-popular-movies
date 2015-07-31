@@ -25,8 +25,8 @@
     <color name="window_background">#e9eaed</color>
     <color name="gray_background">#e4e4e4</color>
 
-    <color name="movie_image_placeholder">@color/material_red700</color>
-    <color name="movie_image_placeholder_light">@color/material_red400</color>
+    <color name="movie_poster_placeholder">@color/material_red700</color>
+    <color name="movie_cover_placeholder">@color/material_red700</color>
 
     <color name="card_selectable_pressed">@color/theme_primary</color>
     <color name="card_shape_background">#1e000000</color>

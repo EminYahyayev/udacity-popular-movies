@@ -3,6 +3,7 @@
     android:id="@+id/multi_swipe_refresh_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,6 +13,13 @@
         android:layout_height="match_parent"
         android:inAnimation="@android:anim/fade_in"
         android:outAnimation="@android:anim/fade_out">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movies_recycler_view"
+            style="@style/CollectionView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_movie" />
 
         <include layout="@layout/partial_view_loading" />
 
@@ -29,11 +37,6 @@
             app:messageImage="@drawable/egg_empty"
             app:messageText="@string/favored_empty_message" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/movies_recycler_view"
-            style="@style/CollectionView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.ewintory.udacity.popularmovies.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -24,10 +23,6 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
 
     protected boolean showLoadMore = false;
 
-    public EndlessAdapter(@NonNull Context context) {
-        this(context, new ArrayList<T>());
-    }
-
     public EndlessAdapter(@NonNull Context context, @NonNull List<T> items) {
         mInflater = LayoutInflater.from(context);
         mItems = items;
@@ -36,7 +31,7 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
     public void setLoadMore(boolean enabled) {
         if (showLoadMore != enabled) {
             if (showLoadMore) {
-                notifyItemRemoved(getItemCount()); // Remove last position
+                notifyItemRemoved(getItemCount());
                 showLoadMore = false;
             } else {
                 notifyItemInserted(getItemCount());
@@ -50,7 +45,7 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
     }
 
     public boolean isLoadMore(int position) {
-        return showLoadMore && (position == (getItemCount() - 1)); // At last position add one
+        return showLoadMore && (position == (getItemCount() - 1));
     }
 
     protected int countLoadMore() {
@@ -90,6 +85,10 @@ public abstract class EndlessAdapter<T, VH extends RecyclerView.ViewHolder> exte
     @NonNull
     public List<T> getItems() {
         return mItems;
+    }
+
+    public T getItem(int position) {
+        return !isLoadMore(position) ? mItems.get(position) : null;
     }
 
     public void clear() {

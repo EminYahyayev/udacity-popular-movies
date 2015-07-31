@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,15 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ewintory.udacity.popularmovies.R;
-import com.ewintory.udacity.popularmovies.data.api.MoviesApi;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.data.repository.MoviesRepository;
 import com.ewintory.udacity.popularmovies.ui.adapter.MoviesAdapter;
-import com.ewintory.udacity.popularmovies.ui.listener.MovieClickListener;
+import com.ewintory.udacity.popularmovies.ui.helper.MoviesHelper;
 import com.ewintory.udacity.popularmovies.ui.module.MoviesModule;
 import com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator;
 import com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout;
-import com.ewintory.udacity.popularmovies.utils.PrefUtils;
-import com.squareup.sqlbrite.BriteDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,35 +28,36 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 public abstract class MoviesFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener, MultiSwipeRefreshLayout.CanChildScrollUpCallback, MovieClickListener {
+        SwipeRefreshLayout.OnRefreshListener, MultiSwipeRefreshLayout.CanChildScrollUpCallback, MoviesAdapter.MovieClickListener {
 
     public interface Listener {
-        void onMovieSelected(Movie movie, View view, @Nullable Palette.Swatch swatch);
+        void onMovieSelected(Movie movie, View view);
     }
 
     private static final String STATE_MOVIES = "state_movies";
+    private static final String STATE_SELECTED_POSITION = "state_selected_position";
 
     protected static final int ANIMATOR_VIEW_LOADING = R.id.view_loading;
     protected static final int ANIMATOR_VIEW_CONTENT = R.id.movies_recycler_view;
     protected static final int ANIMATOR_VIEW_ERROR = R.id.view_error;
     protected static final int ANIMATOR_VIEW_EMPTY = R.id.view_empty;
 
-    @Inject BriteDatabase db;
-    @Inject MoviesApi mMoviesApi;
+    @Inject MoviesRepository mMoviesRepository;
 
     @Bind(R.id.multi_swipe_refresh_layout) MultiSwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.movies_animator) BetterViewAnimator mViewAnimator;
     @Bind(R.id.movies_recycler_view) RecyclerView mRecyclerView;
 
+    protected MoviesHelper mHelper;
     protected Listener listener;
     protected MoviesAdapter mMoviesAdapter;
     protected GridLayoutManager mGridLayoutManager;
-    protected Subscription mGenresSubscription = Subscriptions.empty();
+    protected CompositeSubscription mSubscriptions;
+    protected int mSelectedPosition = -1;
 
     @Override
     public void onAttach(Activity activity) {
@@ -70,6 +67,7 @@ public abstract class MoviesFragment extends BaseFragment implements
 
         super.onAttach(activity);
         listener = (Listener) activity;
+        mHelper = new MoviesHelper(activity, mMoviesRepository);
     }
 
     @Override
@@ -81,9 +79,15 @@ public abstract class MoviesFragment extends BaseFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mSubscriptions = new CompositeSubscription();
+
+        mSelectedPosition = savedInstanceState != null
+                ? savedInstanceState.getInt(STATE_SELECTED_POSITION, -1)
+                : -1;
+
         List<Movie> restoredMovies = savedInstanceState != null
-                ? savedInstanceState.<Movie>getParcelableArrayList(STATE_MOVIES)
-                : new ArrayList<Movie>();
+                ? savedInstanceState.getParcelableArrayList(STATE_MOVIES)
+                : new ArrayList<>();
 
         mMoviesAdapter = new MoviesAdapter(this, restoredMovies);
         mMoviesAdapter.setListener(this);
@@ -96,24 +100,26 @@ public abstract class MoviesFragment extends BaseFragment implements
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STATE_MOVIES, new ArrayList<>(mMoviesAdapter.getItems()));
+        outState.putInt(STATE_SELECTED_POSITION, mSelectedPosition);
     }
 
-    @Override public void onDestroyView() {
-        mGenresSubscription.unsubscribe();
+    @Override
+    public void onDestroyView() {
+        mSubscriptions.unsubscribe();
         super.onDestroyView();
     }
 
     @Override
     public void onDetach() {
-        listener = (movie, view, swatch) -> {};
-        mMoviesAdapter.setListener(MovieClickListener.DUMMY);
+        listener = (movie, view) -> {};
+        mMoviesAdapter.setListener(MoviesAdapter.MovieClickListener.DUMMY);
         super.onDetach();
     }
 
     @Override
     public boolean canSwipeRefreshChildScrollUp() {
         return mRecyclerView != null && ViewCompat.canScrollVertically(mRecyclerView, -1)
-                || mViewAnimator.getDisplayedChildId() == ANIMATOR_VIEW_LOADING;
+                || mViewAnimator != null && mViewAnimator.getDisplayedChildId() == ANIMATOR_VIEW_LOADING;
     }
 
     public void scrollToTop(boolean smooth) {
@@ -127,28 +133,18 @@ public abstract class MoviesFragment extends BaseFragment implements
     public abstract void onRefresh();
 
     @Override
-    public void onContentClicked(@NonNull Movie movie, View view, @Nullable Palette.Swatch swatch) {
-        listener.onMovieSelected(movie, view, swatch);
+    public void onContentClicked(@NonNull Movie movie, View view, int position) {
+        mSelectedPosition = position;
+        listener.onMovieSelected(movie, view);
     }
 
     @Override
-    public boolean onFavoredClicked(@NonNull final Movie movie) {
-        boolean wasFavored = movie.isFavored();
-        Timber.d("onFavoredClicked: wasFavored=" + wasFavored);
+    public void onFavoredClicked(@NonNull final Movie movie, int position) {
+        boolean favored = !movie.isFavored();
+        Timber.v("onFavoredClicked: favored=" + favored);
 
-        movie.setFavored(!wasFavored);
-        if (wasFavored) {
-            PrefUtils.removeFromFavorites(getActivity(), movie.getId());
-            db.update(Movie.TABLE, new Movie.Builder()
-                    .movie(movie)
-                    .build(), "_ID=?", movie.getId() + "");
-        } else {
-            PrefUtils.addToFavorites(getActivity(), movie.getId());
-            db.insert(Movie.TABLE, new Movie.Builder()
-                    .movie(movie)
-                    .build());
-        }
-        return true;
+        mHelper.setMovieFavored(movie, favored);
+        if (favored) showToast(R.string.message_movie_favored);
     }
 
     @CallSuper
@@ -163,6 +159,7 @@ public abstract class MoviesFragment extends BaseFragment implements
 
         mRecyclerView.setLayoutManager(mGridLayoutManager);
         mRecyclerView.setAdapter(mMoviesAdapter);
+        if (mSelectedPosition != -1) mRecyclerView.scrollToPosition(mSelectedPosition);
     }
 
     private void initSwipeRefreshLayout() {
@@ -170,7 +167,6 @@ public abstract class MoviesFragment extends BaseFragment implements
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setCanChildScrollUpCallback(this);
     }
-
 
     @Override
     protected List<Object> getModules() {

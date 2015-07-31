@@ -42,7 +42,7 @@ public final class MoviesGlideModule implements GlideModule {
         // TODO: support other kinds of images(logo_sizes, e.t.c)
         @Override protected String getUrl(String imagePath, int width, int height) {
             String url = ImageUtils.buildPosterUrl(imagePath, width);
-            Timber.tag("Glide").v("Loading image: " + url);
+            //Timber.tag("Glide").v("Loading image: " + url);
             return url;
         }
 

@@ -3,9 +3,7 @@ package com.ewintory.udacity.popularmovies.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,19 +45,14 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_movies);
-        if (findViewById(R.id.movie_details_container) != null) {
-            mTwoPane = true;
-//            if (savedInstanceState == null) {
-//                MovieFragment fragment = MovieFragment.newInstance(null);
-//                replaceMovieDetailsFragment(fragment);
-//            }
-        } else {
-            mTwoPane = false;
-        }
+
+        mTwoPane = findViewById(R.id.movie_details_container) != null;
 
         mMode = (savedInstanceState != null) ?
                 savedInstanceState.getString(STATE_MODE, Sort.POPULARITY.toString())
                 : PrefUtils.getBrowseMoviesMode(this);
+
+        initModeSpinner();
     }
 
     @Override
@@ -71,9 +64,6 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
             replaceMoviesFragment(mMode.equals(MODE_FAVORITES)
                     ? new FavoredMoviesFragment()
                     : SortedMoviesFragment.newInstance(Sort.fromString(mMode)));
-
-
-        initModeSpinner();
     }
 
     @Override
@@ -111,8 +101,9 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
     }
 
     @Override
-    public void onMovieSelected(@NonNull Movie movie, View view, @Nullable Palette.Swatch swatch) {
+    public void onMovieSelected(@NonNull Movie movie, View view) {
         Timber.d(String.format("Movie '%s' selected", movie.getTitle()));
+
         if (mTwoPane) {
             MovieFragment fragment = MovieFragment.newInstance(movie);
             replaceMovieDetailsFragment(fragment);

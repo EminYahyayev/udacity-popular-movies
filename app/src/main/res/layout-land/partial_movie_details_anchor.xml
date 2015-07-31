@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<View
-    android:id="@+id/anchor"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="144dp"
-    android:layout_alignTop="@id/movie_details_cover_container"
-    tools:showIn="@layout/fragment_movie" />

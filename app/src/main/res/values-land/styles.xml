@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Movie details -->
+    <style name="MovieDetailPlayImage">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">48dp</item>
+    </style>
+
+    <style name="MovieDetailAnchor">
+        <item name="android:layout_alignTop">@id/movie_cover_container</item>
+    </style>
+
+</resources>

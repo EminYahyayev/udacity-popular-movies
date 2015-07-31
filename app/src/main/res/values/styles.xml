@@ -46,6 +46,30 @@
         <item name="android:src">@drawable/selector_favorite_button</item>
     </style>
 
+    <!-- Movie details -->
+    <style name="MovieDetailSectionHeader">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textColor">@color/theme_primary</item>
+        <item name="android:paddingBottom">8dp</item>
+        <!--<item name="android:background">@drawable/movie_detail_section_separator</item>-->
+    </style>
+
+    <style name="MovieDetailTextBody">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:textAlignment" tools:ignore="NewApi">textStart</item>
+    </style>
+
+    <style name="MovieDetailPlayImage">
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="MovieDetailAnchor">
+        <item name="android:layout_alignTop">@id/movie_cover_container</item>
+        <item name="android:layout_alignBottom">@id/movie_cover_container</item>
+    </style>
+
     <!-- Toolbar -->
 
     <style name="Toolbar">
