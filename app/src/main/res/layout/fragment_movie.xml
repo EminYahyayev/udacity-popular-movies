@@ -150,6 +150,8 @@
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
+    <include layout="@layout/gradient_header" />
+
     <include
         layout="@layout/toolbar"
         tools:visibility="gone" />
