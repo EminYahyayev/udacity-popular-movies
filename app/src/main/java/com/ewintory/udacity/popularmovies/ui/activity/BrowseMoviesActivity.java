@@ -82,7 +82,7 @@ public final class BrowseMoviesActivity extends BaseActivity implements MoviesFr
                 mMoviesFragment.scrollToTop(true);
                 break;
             case R.id.menu_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivity(new Intent(this, PreferenceActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

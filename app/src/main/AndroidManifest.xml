@@ -27,7 +27,7 @@
             android:theme="@style/Theme.PopularMovies.MovieDetails" />
 
         <activity
-            android:name=".ui.activity.SettingsActivity"
+            android:name=".ui.activity.PreferenceActivity"
             android:label="@string/title_settings"
             android:parentActivityName=".ui.activity.BrowseMoviesActivity" />
 
