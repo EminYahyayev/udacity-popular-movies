@@ -38,7 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupToolbar();
     }
 
-    @Nullable public final Toolbar getToolbar() {
+    @Nullable
+    public final Toolbar getToolbar() {
         return mToolbar;
     }
 

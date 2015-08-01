@@ -33,7 +33,7 @@ final class MoviesRepositoryImpl implements MoviesRepository {
     private final GenresRepository mGenresRepository;
 
     private BehaviorSubject<Set<Long>> mSavedMovieIdsSubject;
-    private Observable<Map<Integer, Genre>> mGenresObservable;
+    private BehaviorSubject<Map<Integer, Genre>> mGenresSubject;
 
     public MoviesRepositoryImpl(MoviesApi moviesApi, ContentResolver contentResolver,
                                 BriteContentResolver briteContentResolver, GenresRepository genresRepository) {
@@ -111,13 +111,15 @@ final class MoviesRepositoryImpl implements MoviesRepository {
             mSavedMovieIdsSubject = BehaviorSubject.create();
             savedMovieIds().subscribe(mSavedMovieIdsSubject);
         }
-        return mSavedMovieIdsSubject;
+        return mSavedMovieIdsSubject.asObservable();
     }
 
     private Observable<Map<Integer, Genre>> getGenresMap() {
-        if (mGenresObservable == null)
-            mGenresObservable = mGenresRepository.genres().cache();
-        return mGenresObservable;
+        if (mGenresSubject == null) {
+            mGenresSubject = BehaviorSubject.create();
+            mGenresRepository.genres().subscribe(mGenresSubject);
+        }
+        return mGenresSubject.asObservable();
     }
 
     private static Func2<List<Movie>, Map<Integer, Genre>, List<Movie>> GENRES_MAPPER = (movies, genreMap) -> {

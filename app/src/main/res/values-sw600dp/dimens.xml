@@ -1,12 +1,14 @@
 <resources>
 
     <!-- Movie details -->
-    <dimen name="movie_details_responsive_width">@dimen/match_parent</dimen>
-    <dimen name="movie_details_content_margin_bottom">0dp</dimen>
     <dimen name="movie_details_poster_width">150dp</dimen>
     <dimen name="movie_details_poster_top_margin">-16dp</dimen>
     <dimen name="movie_details_poster_left_margin">16dp</dimen>
+
+    <dimen name="movie_details_responsive_width">@dimen/match_parent</dimen>
     <dimen name="movie_details_anchor_height">@dimen/match_parent</dimen>
+    <dimen name="movie_details_margin">@dimen/item_spacing_full</dimen>
+    <dimen name="movie_details_content_margin_bottom">@dimen/item_spacing_full</dimen>
 
     <!-- Common -->
     <dimen name="item_load_more_size">72dp</dimen>

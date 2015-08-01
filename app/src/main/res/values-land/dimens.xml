@@ -2,10 +2,11 @@
 <resources>
 
     <!-- Movie Details -->
-    <dimen name="movie_details_responsive_width">450dp</dimen>
     <dimen name="movie_details_poster_width">140dp</dimen>
     <dimen name="movie_details_poster_top_margin">0dp</dimen>
     <dimen name="movie_details_poster_left_margin">0dp</dimen>
+
+    <dimen name="movie_details_responsive_width">450dp</dimen>
     <dimen name="movie_details_content_margin_bottom">48dp</dimen>
     <dimen name="movie_details_anchor_height">144dp</dimen>
 

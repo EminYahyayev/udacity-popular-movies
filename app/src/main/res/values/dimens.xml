@@ -26,12 +26,14 @@
 
     <!-- Movie Details -->
     <item name="movie_details_cover_aspect_ratio" format="float" type="dimen">1.77</item>
-    <dimen name="movie_details_responsive_width">@dimen/match_parent</dimen>
-    <dimen name="movie_details_content_margin_bottom">0dp</dimen>
     <dimen name="movie_details_poster_width">150dp</dimen>
     <dimen name="movie_details_poster_top_margin">-16dp</dimen>
     <dimen name="movie_details_poster_left_margin">16dp</dimen>
+
+    <dimen name="movie_details_responsive_width">@dimen/match_parent</dimen>
     <dimen name="movie_details_anchor_height">@dimen/match_parent</dimen>
+    <dimen name="movie_details_margin">0dp</dimen>
+    <dimen name="movie_details_content_margin_bottom">0dp</dimen>
 
     <!-- Common -->
     <dimen name="item_spacing_half">2dp</dimen>

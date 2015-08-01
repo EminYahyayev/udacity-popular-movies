@@ -47,15 +47,14 @@ import butterknife.OnClick;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
-public final class MovieFragment extends BaseFragment {
+public final class MovieFragment extends BaseFragment implements ObservableScrollViewCallbacks {
     public static final String ARG_MOVIE = "arg_movie";
 
     private static final String STATE_SCROLL_VIEW = "state_scroll_view";
     private static final String STATE_REVIEWS = "state_reviews";
     private static final String STATE_VIDEOS = "state_trailers";
 
-    @Nullable @Bind(R.id.toolbar) Toolbar mToolbar;
-    @Nullable ActionBar mActionBar;
+    @Nullable Toolbar mToolbar;
 
     @Bind(R.id.movie_scroll_view) ObservableScrollView mScrollView;
     @Bind(R.id.movie_poster) ImageView mPosterImage;
@@ -111,28 +110,13 @@ public final class MovieFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (mToolbar != null) {
-            ViewCompat.setElevation(mToolbar, getResources().getDimension(R.dimen.toolbar_elevation));
-            mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, mColorThemePrimary));
-            trySetupActionBar();
-            mToolbar.setTitleTextColor(getResources().getColor(R.color.transparent));
-        }
-
-        mScrollView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-            @Override public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                recomputeScrollMetrics(scrollY);
-            }
-
-            @Override public void onDownMotionEvent() {}
-
-            @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) {}
-        });
+        trySetupToolbar();
+        mScrollView.setScrollViewCallbacks(this);
 
         if (savedInstanceState != null) {
             mVideos = savedInstanceState.getParcelableArrayList(STATE_VIDEOS);
             mReviews = savedInstanceState.getParcelableArrayList(STATE_REVIEWS);
             mScrollView.onRestoreInstanceState(savedInstanceState.getParcelable(STATE_SCROLL_VIEW));
-            recomputeScrollMetrics(mScrollView.getCurrentScrollY());
         }
     }
 
@@ -140,6 +124,8 @@ public final class MovieFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSubscriptions = new CompositeSubscription();
+
+        onScrollChanged(mScrollView.getCurrentScrollY(), false, false);
 
         onMovieLoaded(getArguments().getParcelable(ARG_MOVIE));
 
@@ -200,7 +186,8 @@ public final class MovieFragment extends BaseFragment {
         if (favored) showToast(R.string.message_movie_favored);
     }
 
-    private void recomputeScrollMetrics(int scrollY) {
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
         ViewCompat.setTranslationY(mCoverContainer, scrollY / 2);
 
         if (mToolbar != null) {
@@ -211,23 +198,24 @@ public final class MovieFragment extends BaseFragment {
         }
     }
 
-    private void trySetupActionBar() {
+    @Override
+    public void onDownMotionEvent() { /** ignore */}
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) { /** ignore */}
+
+    private void trySetupToolbar() {
         if (getActivity() instanceof MovieDetailsActivity) {
             MovieDetailsActivity activity = ((MovieDetailsActivity) getActivity());
-            activity.setSupportActionBar(mToolbar);
-            mActionBar = activity.getSupportActionBar();
-            if (mActionBar != null) {
-                mActionBar.setDisplayHomeAsUpEnabled(true);
-                mActionBar.setDisplayShowHomeEnabled(true);
-            }
+            mToolbar = activity.getToolbar();
         }
     }
 
     private void onMovieLoaded(Movie movie) {
         mMovie = movie;
 
-        if (mActionBar != null) {
-            mActionBar.setTitle(mMovie.getTitle());
+        if (mToolbar != null) {
+            mToolbar.setTitle(mMovie.getTitle());
         }
 
         mTitle.setText(movie.getTitle());

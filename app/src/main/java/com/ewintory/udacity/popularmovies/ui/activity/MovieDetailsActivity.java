@@ -1,6 +1,8 @@
 package com.ewintory.udacity.popularmovies.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.ActionBar;
 
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
@@ -11,9 +13,22 @@ public final class MovieDetailsActivity extends BaseActivity {
 
     private static final String MOVIE_FRAGMENT_TAG = "fragment_movie";
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+
+        if (mToolbar != null) {
+            ViewCompat.setElevation(mToolbar, getResources().getDimension(R.dimen.toolbar_elevation));
+            mToolbar.setNavigationOnClickListener(view -> finish());
+
+            ActionBar ab = getSupportActionBar();
+            if (ab != null) {
+                ab.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
+                ab.setDisplayHomeAsUpEnabled(true);
+                ab.setDisplayShowHomeEnabled(true);
+            }
+        }
 
         Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
