@@ -8,22 +8,22 @@ This app was successfully evaluated by certified Udacity code reviewer and was g
 Screens
 --------
 
-![screen](https://raw.github.com/ewintory/udacity-popular-movies/master/art/phone-movies.png)
+![screen](../blob/master/art/phone-movies.png)
 
-![screen](https://raw.github.com/ewintory/udacity-popular-movies/master/art/phone-details.png)
+![screen](../blob/master/art/phone-details.png)
 
-![screen](https://raw.github.com/ewintory/udacity-popular-movies/master/art/tablet-port.png)
+![screen](../blob/master/art/tablet-port.png)
 
-![screen](https://raw.github.com/ewintory/udacity-popular-movies/master/art/tablet-land.png)
+![screen](../blob/master/art/tablet-land.png)
 
 Links
 -------
 
-[1]: https://raw.github.com/ewintory/udacity-popular-movies/master/art/nanodegree-logo.png
-[2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
-
-Android Developer Nanodegree
+[Android Developer Nanodegree][2]
 [![udacity][1]][2]
+
+[1]: ../blob/master/art/nanodegree-logo.png
+[2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
 
 License
 -------
