@@ -5,6 +5,12 @@ This app supports both phone and tablet devices with adaptive and friendly UI.
 
 This app was successfully evaluated by certified Udacity code reviewer and was graded as an "Exceeds Specifications".
 
+##### Features:
+* discover the most popular, the most rated or the highest rated movies
+* save favored movies locally to view them even when offline
+* watch trailers
+* read reviews
+
 Screens
 --------
 
@@ -18,6 +24,8 @@ Screens
 
 Links
 -------
+
+[The movie Database (TMDb)](https://www.themoviedb.org/)
 
 [Android Developer Nanodegree][2]
 [![udacity][1]][2]
