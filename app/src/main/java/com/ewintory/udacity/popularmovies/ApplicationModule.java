@@ -14,22 +14,34 @@
  * limitations under the License.
  */
 
-package com.ewintory.udacity.popularmovies.ui.module;
+package com.ewintory.udacity.popularmovies;
 
+import android.app.Application;
 
-import com.ewintory.udacity.popularmovies.ApplicationModule;
-import com.ewintory.udacity.popularmovies.ui.fragment.FavoredMoviesFragment;
-import com.ewintory.udacity.popularmovies.ui.fragment.MovieFragment;
-import com.ewintory.udacity.popularmovies.ui.fragment.SortedMoviesFragment;
+import com.ewintory.udacity.popularmovies.data.DataModule;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
+import dagger.Provides;
 
 @Module(
+        includes = DataModule.class,
         injects = {
-                SortedMoviesFragment.class,
-                FavoredMoviesFragment.class,
-                MovieFragment.class
+                MoviesApplication.class
         },
-        addsTo = ApplicationModule.class
+        library = true
 )
-public final class MoviesModule {}
+public final class ApplicationModule {
+    private final MoviesApplication application;
+
+    public ApplicationModule(MoviesApplication application) {
+        this.application = application;
+    }
+
+    @Provides @Singleton Application provideApplication() {
+        return application;
+    }
+
+}
+
