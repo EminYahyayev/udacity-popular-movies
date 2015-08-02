@@ -8,13 +8,13 @@ This app was successfully evaluated by certified Udacity code reviewer and was g
 Screens
 --------
 
-![screen](../blob/master/art/phone-movies.png)
+![screen](../master/art/phone-movies.png)
 
-![screen](../blob/master/art/phone-details.png)
+![screen](../master/art/phone-details.png)
 
-![screen](../blob/master/art/tablet-port.png)
+![screen](../master/art/tablet-port.png)
 
-![screen](../blob/master/art/tablet-land.png)
+![screen](../master/art/tablet-land.png)
 
 Links
 -------
@@ -22,7 +22,7 @@ Links
 [Android Developer Nanodegree][2]
 [![udacity][1]][2]
 
-[1]: ../blob/master/art/nanodegree-logo.png
+[1]: ../master/art/nanodegree-logo.png
 [2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
 
 License
