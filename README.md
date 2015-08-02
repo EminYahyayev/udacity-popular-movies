@@ -3,7 +3,7 @@
 A fully functional and colorful android app which I made during Android Developer Nanodegree course.
 This app reveals the power of adaptive UI both for phone and tablet devices.
 
-*Popular Movies* was successfully evaluated by certified Udacity code reviewer and was graded as an "Exceeds Specifications".
+**Popular Movies** was successfully evaluated by certified Udacity code reviewer and was graded as an "Exceeds Specifications".
 
 ##### Features:
 * discover the most popular, the most rated or the highest rated movies
