@@ -18,7 +18,7 @@ With the app, you can:
 This app uses [The Movie Database](https://www.themoviedb.org/documentation/api) API to retrieve movies.
 You must provide your own API key in order to build the app. When you get it, just paste it to:
     ```
-    android/src/main/java/com/ewintory/udacity/app/build.gradle
+        app/build.gradle
     ```
 
 ## Screens
