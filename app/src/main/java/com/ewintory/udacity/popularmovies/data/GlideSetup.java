@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ewintory.udacity.popularmovies.utils;
+package com.ewintory.udacity.popularmovies.data;
 
 import android.content.Context;
 
@@ -28,13 +28,14 @@ import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.bumptech.glide.module.GlideModule;
 import com.ewintory.udacity.popularmovies.MoviesApplication;
+import com.ewintory.udacity.popularmovies.utils.ImageUtils;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
 
 import javax.inject.Inject;
 
-public final class MoviesGlideModule implements GlideModule {
+public final class GlideSetup implements GlideModule {
 
     @Inject OkHttpClient mOkHttpClient;
 

@@ -42,12 +42,12 @@ import butterknife.ButterKnife;
 
 public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.MovieHolder> {
 
-    public interface MovieClickListener {
+    public interface OnMovieClickListener {
         void onContentClicked(@NonNull final Movie movie, View view, int position);
 
         void onFavoredClicked(@NonNull final Movie movie, int position);
 
-        MovieClickListener DUMMY = new MovieClickListener() {
+        OnMovieClickListener DUMMY = new OnMovieClickListener() {
             @Override public void onContentClicked(@NonNull Movie movie, View view, int position) {}
 
             @Override public void onFavoredClicked(@NonNull Movie movie, int position) { }
@@ -55,7 +55,7 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
     }
 
     @NonNull private final Fragment mFragment;
-    @NonNull private MovieClickListener mListener = MovieClickListener.DUMMY;
+    @NonNull private OnMovieClickListener mListener = OnMovieClickListener.DUMMY;
 
     public MoviesAdapter(@NonNull Fragment fragment, List<Movie> movies) {
         super(fragment.getActivity(), movies == null ? new ArrayList<>() : movies);
@@ -63,7 +63,7 @@ public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.Mov
         setHasStableIds(true);
     }
 
-    public void setListener(@NonNull MovieClickListener listener) {
+    public void setListener(@NonNull OnMovieClickListener listener) {
         this.mListener = listener;
     }
 

@@ -18,9 +18,7 @@ package com.ewintory.udacity.popularmovies.utils;
 
 import java.util.List;
 
-/**
- * String formatting utils for our app
- */
+
 public final class StringUtils {
 
     private StringUtils() {

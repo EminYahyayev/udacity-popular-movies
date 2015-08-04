@@ -1,18 +1,27 @@
 # Popular Movies
 
-Here is a fully functional and colorful android app which I made from scratch for Android Developer Nanodegree course.
+Here is a fully functional and colorful android app which I made from scratch for Android Developer Nanodegree program.
 This app reveals the power of adaptive UI both for phone and tablet devices.
 
 *Popular Movies* was highly evaluated by certified Udacity code reviewer and was graded as "Exceeds Specifications".
 
-##### Features:
-* discover the most popular, the most rated or the highest rated movies
-* save favored movies locally to view them even when offline
-* watch trailers
-* read reviews
+## Features:
 
-Screens
---------
+With the app, you can:
+* Discover the most popular, the most rated or the highest rated movies
+* Save favorite movies locally to view them even when offline
+* Watch trailers
+* Read reviews
+
+## How to Work with the Source
+
+This app uses [The Movie Database](https://www.themoviedb.org/documentation/api) API to retrieve movies.
+You must provide your own API key in order to build the app. When you get it, just paste it to:
+    ```
+    android/src/main/java/com/ewintory/udacity/app/build.gradle
+    ```
+
+## Screens
 
 ![screen](../master/art/phone-movies.png)
 
@@ -22,19 +31,25 @@ Screens
 
 ![screen](../master/art/tablet-land.png)
 
-Links
--------
+## Libraries
 
-[The Movie Database (TMDb)](https://www.themoviedb.org/)
+* [ButterKnife](https://github.com/JakeWharton/butterknife)
+* [Timber](https://github.com/JakeWharton/timber)
+* [Retrofit](https://github.com/square/retrofit)
+* [SQLBrite](https://github.com/square/sqlbrite)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [Glide](https://github.com/bumptech/glide)
+* [GlidePalette](https://github.com/florent37/GlidePalette)
+* [Android-ObservableScrollView](https://github.com/ksoichiro/Android-ObservableScrollView)
+* [Gradle Retrolambda Plugin](https://github.com/evant/gradle-retrolambda)
 
-[Android Developer Nanodegree][2]
+## Android Developer Nanodegree
 [![udacity][1]][2]
 
 [1]: ../master/art/nanodegree-logo.png
 [2]: https://www.udacity.com/course/android-developer-nanodegree--nd801
 
-License
--------
+## License
 
     Copyright 2015 Emin Yahyayev
 

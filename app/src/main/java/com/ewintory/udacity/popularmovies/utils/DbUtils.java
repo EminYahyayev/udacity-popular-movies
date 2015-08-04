@@ -18,7 +18,7 @@ package com.ewintory.udacity.popularmovies.utils;
 
 import android.database.Cursor;
 
-public final class Db {
+public final class DbUtils {
     public static final int BOOLEAN_FALSE = 0;
     public static final int BOOLEAN_TRUE = 1;
 
@@ -42,7 +42,7 @@ public final class Db {
         return cursor.getDouble(cursor.getColumnIndexOrThrow(columnName));
     }
 
-    private Db() {
+    private DbUtils() {
         throw new AssertionError("No instances.");
     }
 }

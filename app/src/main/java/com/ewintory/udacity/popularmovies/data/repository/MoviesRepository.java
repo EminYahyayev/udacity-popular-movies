@@ -28,8 +28,11 @@ import java.util.Set;
 import rx.Observable;
 
 /**
- * Interface which hides network and database calls' implementation
- * and gives clear api for UI
+ * A facade for which Fragments and Activities can use to
+ * get the data needed to display without understanding
+ * how the data is retrieved
+ *
+ * @see MoviesRepositoryImpl
  */
 public interface MoviesRepository {
 

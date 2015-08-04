@@ -98,9 +98,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Binds the given source sequence to a support-v4 fragment.
-     *
-     * @see AppObservable#bindSupportFragment(Fragment, Observable)
+     * Binds the given source sequence to the {@code BaseFragment}
      */
     protected final <T> Observable<T> bind(Observable<T> source) {
         return AppObservable.bindSupportFragment(this, source);

@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * Modifications:
- * -Imported from AOSP frameworks/base/core/java/com/android/internal/content
- * -Changed package name
- */
-
 package com.ewintory.udacity.popularmovies.utils;
 
 import android.content.ContentValues;
@@ -38,7 +32,7 @@ import java.util.Map;
  * appended clause is combined using {@code AND}. This class is <em>not</em>
  * thread safe.
  */
-public class SelectionBuilder {
+public final class SelectionBuilder {
 
     private String mTable = null;
     private Map<String, String> mProjectionMap = new HashMap<>();

@@ -21,7 +21,6 @@ import android.app.Application;
 import com.ewintory.udacity.popularmovies.data.api.ApiModule;
 import com.ewintory.udacity.popularmovies.data.provider.ProviderModule;
 import com.ewintory.udacity.popularmovies.data.repository.RepositoryModule;
-import com.ewintory.udacity.popularmovies.utils.MoviesGlideModule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Cache;
@@ -43,7 +42,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
                 RepositoryModule.class
         },
         injects = {
-                MoviesGlideModule.class
+                GlideSetup.class
         },
         complete = false,
         library = true

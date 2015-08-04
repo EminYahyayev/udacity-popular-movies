@@ -16,7 +16,6 @@
 
 package com.ewintory.udacity.popularmovies.ui.activity;
 
-import android.app.Activity;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -74,9 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Binds the given source sequence to an Activity.
-     *
-     * @see AppObservable#bindActivity(Activity, Observable)
+     * Binds the given source sequence to the {@code BaseActivity}.
      */
     protected final <T> Observable<T> bind(Observable<T> source) {
         return AppObservable.bindActivity(this, source);

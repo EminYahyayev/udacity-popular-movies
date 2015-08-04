@@ -21,7 +21,7 @@ import android.database.Cursor;
 
 import com.ewintory.udacity.popularmovies.data.model.Genre;
 import com.ewintory.udacity.popularmovies.data.provider.MoviesContract;
-import com.ewintory.udacity.popularmovies.utils.Db;
+import com.ewintory.udacity.popularmovies.utils.DbUtils;
 import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.HashMap;
@@ -44,8 +44,8 @@ public interface GenreMeta {
             Map<Integer, Genre> values = new HashMap<>(cursor.getCount());
 
             while (cursor.moveToNext()) {
-                int id = Db.getInt(cursor, MoviesContract.GenresColumns.GENRE_ID);
-                String name = Db.getString(cursor, MoviesContract.GenresColumns.GENRE_NAME);
+                int id = DbUtils.getInt(cursor, MoviesContract.GenresColumns.GENRE_ID);
+                String name = DbUtils.getString(cursor, MoviesContract.GenresColumns.GENRE_NAME);
                 values.put(id, new Genre(id, name));
             }
             return values;

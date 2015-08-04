@@ -18,11 +18,10 @@ package com.ewintory.udacity.popularmovies.data.provider.meta;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.provider.BaseColumns;
 
 import com.ewintory.udacity.popularmovies.data.model.Movie;
 import com.ewintory.udacity.popularmovies.data.provider.MoviesContract;
-import com.ewintory.udacity.popularmovies.utils.Db;
+import com.ewintory.udacity.popularmovies.utils.DbUtils;
 import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.ArrayList;
@@ -31,8 +30,6 @@ import java.util.List;
 import java.util.Set;
 
 import rx.functions.Func1;
-
-import static com.ewintory.udacity.popularmovies.data.provider.MoviesContract.MoviesColumns;
 
 public interface MovieMeta {
 
@@ -57,17 +54,17 @@ public interface MovieMeta {
             List<Movie> values = new ArrayList<>(cursor.getCount());
             while (cursor.moveToNext()) {
                 values.add(new Movie()
-                        .setId(Db.getLong(cursor, MoviesContract.Movies.MOVIE_ID))
-                        .setTitle(Db.getString(cursor, MoviesContract.Movies.MOVIE_TITLE))
-                        .setOverview(Db.getString(cursor, MoviesContract.Movies.MOVIE_OVERVIEW))
-                        .putGenreIdsList(Db.getString(cursor, MoviesContract.Movies.MOVIE_GENRE_IDS))
-                        .setPosterPath(Db.getString(cursor, MoviesContract.Movies.MOVIE_POSTER_PATH))
-                        .setBackdropPath(Db.getString(cursor, MoviesContract.Movies.MOVIE_BACKDROP_PATH))
-                        .setFavored(Db.getBoolean(cursor, MoviesContract.Movies.MOVIE_FAVORED))
-                        .setPopularity(Db.getDouble(cursor, MoviesContract.Movies.MOVIE_POPULARITY))
-                        .setVoteCount(Db.getInt(cursor, MoviesContract.Movies.MOVIE_VOTE_COUNT))
-                        .setVoteAverage(Db.getDouble(cursor, MoviesContract.Movies.MOVIE_VOTE_AVERAGE))
-                        .setReleaseDate(Db.getString(cursor, MoviesContract.Movies.MOVIE_RELEASE_DATE)));
+                        .setId(DbUtils.getLong(cursor, MoviesContract.Movies.MOVIE_ID))
+                        .setTitle(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_TITLE))
+                        .setOverview(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_OVERVIEW))
+                        .putGenreIdsList(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_GENRE_IDS))
+                        .setPosterPath(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_POSTER_PATH))
+                        .setBackdropPath(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_BACKDROP_PATH))
+                        .setFavored(DbUtils.getBoolean(cursor, MoviesContract.Movies.MOVIE_FAVORED))
+                        .setPopularity(DbUtils.getDouble(cursor, MoviesContract.Movies.MOVIE_POPULARITY))
+                        .setVoteCount(DbUtils.getInt(cursor, MoviesContract.Movies.MOVIE_VOTE_COUNT))
+                        .setVoteAverage(DbUtils.getDouble(cursor, MoviesContract.Movies.MOVIE_VOTE_AVERAGE))
+                        .setReleaseDate(DbUtils.getString(cursor, MoviesContract.Movies.MOVIE_RELEASE_DATE)));
             }
             return values;
         } finally {
@@ -84,7 +81,7 @@ public interface MovieMeta {
         try {
             Set<Long> idSet = new HashSet<>(cursor.getCount());
             while (cursor.moveToNext()) {
-                idSet.add(Db.getLong(cursor, MoviesContract.Movies.MOVIE_ID));
+                idSet.add(DbUtils.getLong(cursor, MoviesContract.Movies.MOVIE_ID));
             }
             return idSet;
         } finally {

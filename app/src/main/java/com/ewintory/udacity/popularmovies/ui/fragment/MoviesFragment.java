@@ -48,7 +48,7 @@ import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 public abstract class MoviesFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener, MultiSwipeRefreshLayout.CanChildScrollUpCallback, MoviesAdapter.MovieClickListener {
+        SwipeRefreshLayout.OnRefreshListener, MultiSwipeRefreshLayout.CanChildScrollUpCallback, MoviesAdapter.OnMovieClickListener {
 
     public interface Listener {
         void onMovieSelected(Movie movie, View view);
@@ -128,7 +128,7 @@ public abstract class MoviesFragment extends BaseFragment implements
     @Override
     public void onDetach() {
         listener = (movie, view) -> {};
-        mMoviesAdapter.setListener(MoviesAdapter.MovieClickListener.DUMMY);
+        mMoviesAdapter.setListener(MoviesAdapter.OnMovieClickListener.DUMMY);
         super.onDetach();
     }
 
