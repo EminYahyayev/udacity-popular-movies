@@ -25,16 +25,18 @@ import android.support.v7.widget.Toolbar;
 
 import com.ewintory.udacity.popularmovies.MoviesApplication;
 import com.ewintory.udacity.popularmovies.R;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.app.AppObservable;
 import timber.log.Timber;
 
 /**
  * Base class for all activities.
- * Binds Views
+ * Binds views and watches memory leaks
+ *
+ * @see ButterKnife
+ * @see RefWatcher
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -70,12 +72,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (actionBar == null) return;
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(false);
-    }
-
-    /**
-     * Binds the given source sequence to the {@code BaseActivity}.
-     */
-    protected final <T> Observable<T> bind(Observable<T> source) {
-        return AppObservable.bindActivity(this, source);
     }
 }

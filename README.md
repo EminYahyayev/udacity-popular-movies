@@ -5,7 +5,7 @@ This app reveals the power of adaptive UI both for phone and tablet devices.
 
 *Popular Movies* was highly evaluated by certified Udacity code reviewer and was graded as "Exceeds Specifications".
 
-## Features:
+## Features
 
 With the app, you can:
 * Discover the most popular, the most rated or the highest rated movies
@@ -18,7 +18,7 @@ With the app, you can:
 This app uses [The Movie Database](https://www.themoviedb.org/documentation/api) API to retrieve movies.
 You must provide your own API key in order to build the app. When you get it, just paste it to:
     ```
-        app/build.gradle
+    app/build.gradle
     ```
 
 ## Screens
@@ -34,10 +34,11 @@ You must provide your own API key in order to build the app. When you get it, ju
 ## Libraries
 
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
-* [Timber](https://github.com/JakeWharton/timber)
+* [Dagger](https://github.com/square/dagger)
 * [Retrofit](https://github.com/square/retrofit)
 * [SQLBrite](https://github.com/square/sqlbrite)
 * [RxJava](https://github.com/ReactiveX/RxJava)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [Glide](https://github.com/bumptech/glide)
 * [GlidePalette](https://github.com/florent37/GlidePalette)
 * [Android-ObservableScrollView](https://github.com/ksoichiro/Android-ObservableScrollView)

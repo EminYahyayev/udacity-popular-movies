@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -255,7 +254,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     }
 
     private void loadReviews() {
-        mSubscriptions.add(bind(mMoviesRepository.reviews(mMovie.getId()))
+        mSubscriptions.add(mMoviesRepository.reviews(mMovie.getId())
                 .subscribe(reviews -> {
                     Timber.d(String.format("Reviews loaded, %d items.", reviews.size()));
                     onReviewsLoaded(reviews);
@@ -297,7 +296,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     }
 
     private void loadVideos() {
-        mSubscriptions.add(bind(mMoviesRepository.videos(mMovie.getId())).subscribe(videos -> {
+        mSubscriptions.add(mMoviesRepository.videos(mMovie.getId()).subscribe(videos -> {
             Timber.d(String.format("Videos loaded, %d items.", videos.size()));
             Timber.d("Videos: " + videos);
             onVideosLoaded(videos);

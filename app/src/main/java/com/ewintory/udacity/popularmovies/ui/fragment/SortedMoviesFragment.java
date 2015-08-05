@@ -128,7 +128,7 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
 
     private void subscribeToMovies() {
         Timber.d("Subscribing to items");
-        mSubscriptions.add(bind(Observable.concat(mItemsObservableSubject))
+        mSubscriptions.add(Observable.concat(mItemsObservableSubject)
                 .subscribe(movies -> {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mCurrentPage++;

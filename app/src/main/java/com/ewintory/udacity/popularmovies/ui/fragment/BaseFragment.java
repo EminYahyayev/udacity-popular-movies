@@ -32,8 +32,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
-import rx.Observable;
-import rx.android.app.AppObservable;
 
 /**
  * Base class for all fragments.
@@ -95,12 +93,5 @@ public abstract class BaseFragment extends Fragment {
 
     protected List<Object> getModules() {
         return Collections.emptyList();
-    }
-
-    /**
-     * Binds the given source sequence to the {@code BaseFragment}
-     */
-    protected final <T> Observable<T> bind(Observable<T> source) {
-        return AppObservable.bindSupportFragment(this, source);
     }
 }

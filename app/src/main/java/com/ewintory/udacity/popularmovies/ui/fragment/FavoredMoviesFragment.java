@@ -49,7 +49,7 @@ public final class FavoredMoviesFragment extends MoviesFragment {
             mViewAnimator.setDisplayedChildId(ANIMATOR_VIEW_LOADING);
 
         mFavoritesSubscription.unsubscribe();
-        mFavoritesSubscription = bind(mMoviesRepository.savedMovies())
+        mFavoritesSubscription = mMoviesRepository.savedMovies()
                 .subscribe(movies -> {
                     Timber.d(String.format("Favored movies loaded, %d items", movies.size()));
                     mSwipeRefreshLayout.setRefreshing(false);
