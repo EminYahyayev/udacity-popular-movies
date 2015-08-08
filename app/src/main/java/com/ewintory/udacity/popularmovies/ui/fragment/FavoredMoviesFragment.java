@@ -20,6 +20,7 @@ package com.ewintory.udacity.popularmovies.ui.fragment;
 import android.support.annotation.IdRes;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
 
@@ -50,6 +51,7 @@ public final class FavoredMoviesFragment extends MoviesFragment {
 
         mFavoritesSubscription.unsubscribe();
         mFavoritesSubscription = mMoviesRepository.savedMovies()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> {
                     Timber.d(String.format("Favored movies loaded, %d items", movies.size()));
                     mSwipeRefreshLayout.setRefreshing(false);

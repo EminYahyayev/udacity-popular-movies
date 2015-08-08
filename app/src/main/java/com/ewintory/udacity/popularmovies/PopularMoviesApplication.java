@@ -24,13 +24,13 @@ import com.squareup.leakcanary.RefWatcher;
 import dagger.ObjectGraph;
 import timber.log.Timber;
 
-public final class MoviesApplication extends Application {
+public final class PopularMoviesApplication extends Application {
 
     private ObjectGraph objectGraph;
     private RefWatcher refWatcher;
 
-    public static MoviesApplication get(Context context) {
-        return (MoviesApplication) context.getApplicationContext();
+    public static PopularMoviesApplication get(Context context) {
+        return (PopularMoviesApplication) context.getApplicationContext();
     }
 
     @Override public void onCreate() {

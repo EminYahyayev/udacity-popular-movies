@@ -18,10 +18,16 @@
     package="com.ewintory.udacity.popularmovies"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Permissions required by the sync adapter -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
     <application
-        android:name=".MoviesApplication"
+        android:name=".PopularMoviesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -49,9 +55,30 @@
 
         <provider
             android:name=".data.provider.MoviesProvider"
-            android:authorities="com.ewintory.udacity.popularmovies.provider"
+            android:authorities="@string/content_authority"
             android:exported="false"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:syncable="true" />
+
+        <service android:name=".data.sync.PopularMoviesAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <service
+            android:name=".data.sync.PopularMoviesSyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
 
         <meta-data
             android:name="com.ewintory.udacity.popularmovies.data.GlideSetup"

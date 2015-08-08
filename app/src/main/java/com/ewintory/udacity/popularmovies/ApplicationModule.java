@@ -28,14 +28,14 @@ import dagger.Provides;
 @Module(
         includes = DataModule.class,
         injects = {
-                MoviesApplication.class
+                PopularMoviesApplication.class
         },
         library = true
 )
 public final class ApplicationModule {
-    private final MoviesApplication application;
+    private final PopularMoviesApplication application;
 
-    public ApplicationModule(MoviesApplication application) {
+    public ApplicationModule(PopularMoviesApplication application) {
         this.application = application;
     }
 

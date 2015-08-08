@@ -30,6 +30,7 @@ import com.ewintory.udacity.popularmovies.ui.listener.EndlessScrollListener;
 import java.util.List;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
@@ -78,14 +79,16 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
         super.onActivityCreated(savedInstanceState);
 
         // subscribe to global favored changes in order to synchronise movies from different views
-        mSubscriptions.add(mHelper.getFavoredObservable().subscribe(event -> {
-            int count = mMoviesAdapter.getItemCount();
-            for (int position = 0; position < count; position++) {
-                if (mMoviesAdapter.getItemId(position) == event.movieId) {
-                    mMoviesAdapter.notifyItemChanged(position);
-                }
-            }
-        }));
+        mSubscriptions.add(mHelper.getFavoredObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(event -> {
+                    int count = mMoviesAdapter.getItemCount();
+                    for (int position = 0; position < count; position++) {
+                        if (mMoviesAdapter.getItemId(position) == event.movieId) {
+                            mMoviesAdapter.notifyItemChanged(position);
+                        }
+                    }
+                }));
 
         subscribeToMovies();
         if (savedInstanceState == null)
@@ -129,6 +132,7 @@ public final class SortedMoviesFragment extends MoviesFragment implements Endles
     private void subscribeToMovies() {
         Timber.d("Subscribing to items");
         mSubscriptions.add(Observable.concat(mItemsObservableSubject)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mCurrentPage++;

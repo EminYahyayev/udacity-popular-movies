@@ -27,7 +27,7 @@ import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.bumptech.glide.module.GlideModule;
-import com.ewintory.udacity.popularmovies.MoviesApplication;
+import com.ewintory.udacity.popularmovies.PopularMoviesApplication;
 import com.ewintory.udacity.popularmovies.utils.ImageUtils;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -42,7 +42,7 @@ public final class GlideSetup implements GlideModule {
     @Override public void applyOptions(Context context, GlideBuilder builder) { /** ignore */}
 
     @Override public void registerComponents(Context context, Glide glide) {
-        MoviesApplication.get(context).inject(this);
+        PopularMoviesApplication.get(context).inject(this);
 
         glide.register(String.class, InputStream.class, new ImageLoader.Factory());
         glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(mOkHttpClient));

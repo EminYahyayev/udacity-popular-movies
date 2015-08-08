@@ -21,6 +21,8 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 
+import timber.log.Timber;
+
 public final class ResourceUtils {
 
     private ResourceUtils() {
@@ -28,8 +30,9 @@ public final class ResourceUtils {
     }
 
     public static float getFloatDimension(@NonNull Resources resources, @DimenRes int dimenRes) {
-        TypedValue outValue = new TypedValue();
-        resources.getValue(dimenRes, outValue, true);
-        return outValue.getFloat();
+        TypedValue value = new TypedValue();
+        resources.getValue(dimenRes, value, true);
+        Timber.d("Value type: " + (value.type == TypedValue.TYPE_FLOAT));
+        return value.getFloat();
     }
 }

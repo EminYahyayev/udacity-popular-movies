@@ -225,9 +225,6 @@ public final class MoviesProvider extends ContentProvider {
             }
             case MOVIES: {
                 return builder.table(Tables.MOVIES);
-                /*return builder.table(Tables.MOVIES_JOIN_GENRES)
-                        .mapToTable(Movies.MOVIE_ID, Tables.MOVIES)
-                        .groupBy(Qualified.MOVIES_MOVIE_ID);*/
             }
             case MOVIES_ID: {
                 final String movieId = Movies.getMovieId(uri);

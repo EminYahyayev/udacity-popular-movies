@@ -24,7 +24,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ewintory.udacity.popularmovies.MoviesApplication;
+import com.ewintory.udacity.popularmovies.PopularMoviesApplication;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Collections;
@@ -68,13 +68,13 @@ public abstract class BaseFragment extends Fragment {
     @Override public void onDestroy() {
         mObjectGraph = null;
         super.onDestroy();
-        MoviesApplication.get(getActivity()).getRefWatcher().watch(this);
+        PopularMoviesApplication.get(getActivity()).getRefWatcher().watch(this);
     }
 
     private void buildObjectGraph(Activity activity) {
         Object[] modules = getModules().toArray();
         if (modules.length > 0) {
-            mObjectGraph = MoviesApplication.get(activity).buildScopedObjectGraph(modules);
+            mObjectGraph = PopularMoviesApplication.get(activity).buildScopedObjectGraph(modules);
             mObjectGraph.inject(this);
         }
     }

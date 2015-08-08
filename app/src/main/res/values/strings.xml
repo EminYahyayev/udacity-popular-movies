@@ -17,6 +17,7 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
     <string name="app_name" translatable="false">PopMovies</string>
     <string name="__leak_canary_display_activity_label" translatable="false">PopMovies Leaks</string>
+    <string name="content_authority" translatable="false">com.ewintory.udacity.popularmovies.provider</string>
 
     <!-- Screen titles -->
     <string name="title_browse_movies">PopMovies</string>
@@ -63,5 +64,6 @@
     <string name="share_template">Check out \'<xliff:g id="title">%1$s</xliff:g>\' at <xliff:g id="url">%2$s</xliff:g></string>
     <string name="title_share_trailer">Share trailer</string>
     <string name="message_movie_favored">Saved to favorites.</string>
+    <string name="sync_account_type">popularmovies.ewintory.com</string>
 
 </resources>

@@ -23,7 +23,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.ewintory.udacity.popularmovies.MoviesApplication;
+import com.ewintory.udacity.popularmovies.PopularMoviesApplication;
 import com.ewintory.udacity.popularmovies.R;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @CallSuper
     @Override protected void onDestroy() {
         super.onDestroy();
-        MoviesApplication.get(this).getRefWatcher().watch(this);
+        PopularMoviesApplication.get(this).getRefWatcher().watch(this);
     }
 
     @CallSuper

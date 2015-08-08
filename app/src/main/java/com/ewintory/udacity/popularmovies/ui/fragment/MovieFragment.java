@@ -62,6 +62,8 @@ import butterknife.OnClick;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
+import static butterknife.ButterKnife.findById;
+
 public final class MovieFragment extends BaseFragment implements ObservableScrollViewCallbacks {
     public static final String ARG_MOVIE = "arg_movie";
 
@@ -281,8 +283,8 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
                 }
 
                 final View reviewView = inflater.inflate(R.layout.item_review_detail, mReviewsGroup, false);
-                final TextView reviewAuthorView = (TextView) reviewView.findViewById(R.id.review_author);
-                final TextView reviewContentView = (TextView) reviewView.findViewById(R.id.review_content);
+                final TextView reviewAuthorView = findById(reviewView, R.id.review_author);
+                final TextView reviewContentView = findById(reviewView, R.id.review_content);
 
                 reviewAuthorView.setText(review.getAuthor());
                 reviewContentView.setText(review.getContent());
@@ -330,7 +332,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
 
             for (Video video : videos) {
                 final View videoView = inflater.inflate(R.layout.item_video, mVideosGroup, false);
-                final TextView videoNameView = (TextView) videoView.findViewById(R.id.video_name);
+                final TextView videoNameView = findById(videoView, R.id.video_name);
 
                 videoNameView.setText(video.getSite() + ": " + video.getName());
                 videoView.setTag(video);

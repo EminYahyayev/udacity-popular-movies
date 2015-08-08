@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ewintory.udacity.popularmovies.R;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
+import com.ewintory.udacity.popularmovies.utils.ResourceUtils;
 import com.ewintory.udacity.popularmovies.utils.UiUtils;
 import com.github.florent37.glidepalette.GlidePalette;
 
@@ -39,6 +40,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public final class MoviesAdapter extends EndlessAdapter<Movie, MoviesAdapter.MovieHolder> {
 
