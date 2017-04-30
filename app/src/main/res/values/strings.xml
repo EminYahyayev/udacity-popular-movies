@@ -14,56 +14,36 @@
   limitations under the License.
   -->
 
-<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    <string name="app_name" translatable="false">PopMovies</string>
-    <string name="__leak_canary_display_activity_label" translatable="false">PopMovies Leaks</string>
-    <string name="content_authority" translatable="false">com.ewintory.udacity.popularmovies.provider</string>
+<resources>
 
-    <!-- Screen titles -->
-    <string name="title_browse_movies">PopMovies</string>
-    <string name="title_movie_details">Movie Details</string>
+    <!-- General -->
+    <string name="app_name" translatable="false">Popular Movies</string>
+    <string name="launcher_name" translatable="false">PopMovies</string>
+
+    <!-- Buttons -->
+    <string name="button_retry">Retry</string>
+
+    <!-- Messages -->
+    <string name="msg_processing">Processing…</string>
 
     <!-- Common -->
     <string name="view_empty_message">No matching items</string>
     <string name="view_error_message">This content is not available offline.</string>
 
-    <!-- Browse Movies-->
-    <string name="mode_favored">Favorites</string>
-    <string name="mode_sort">Sorting</string>
-    <string name="mode_sort_popularity">Most popular</string>
-    <string name="mode_sort_vote_average">Highest rated</string>
-    <string name="mode_sort_vote_count">Most rated</string>
+    <!-- Movies -->
+    <string name="movies_title">Popular Movies</string>
+    <string name="movies_sort">Sorting</string>
+    <string name="movies_sort_popularity">Most popular</string>
+    <string name="movies_sort_vote_average">Highest rated</string>
+    <string name="movies_sort_vote_count">Most rated</string>
+    <string name="movies_empty">No matching movies</string>
+    <string name="movies_error_generic">Failed to load movies.\nTry again later.</string>
+    <string name="movies_error_connection">Failed to load movies.\nPlease check your network connection.</string>
+    <string name="movie_item_empty_genres">No genres</string>
+    <string name="movie_item_image_desc">Movie image</string>
+    <string name="movie_item_poster_desc">Movie poster</string>
+    <string name="movies_filters_title">Filters</string>
+    <string name="movies_filter_genres">Genres</string>
 
-    <string name="movie_image_desc">Movie image</string>
-    <string name="movie_poster_desc">Movie poster</string>
-    <string name="menu_sort">Sorting</string>
-    <string name="menu_sort_popularity">Most popular</string>
-    <string name="menu_sort_vote_average">Highest rated</string>
-    <string name="menu_sort_vote_count">Most rated</string>
-    <string name="menu_sort_favorites">Favored</string>
-
-    <string name="favored_empty_message">You have no favored movies yet.</string>
-    <string name="favored_error_message">Loading failed, please try again.</string>
-
-    <!-- Movie details -->
-    <string name="movie_details_rating">Average rating: %1$s</string>
-    <string name="menu_refresh">Refresh</string>
-    <string name="menu_scroll_to_top">Scroll to top</string>
-    <string name="menu_about">About</string>
-    <string name="movie_item_btn_favorite_desc">Save to favorites</string>
-    <string name="title_settings">Settings</string>
-    <string name="pref_include_adult_title">Include adult</string>
-    <string name="pref_include_adult_description">Toggle the inclusion of adult movies.</string>
-    <string name="menu_settings">Settings</string>
-    <string name="movie_details_trailer_desc">Play the trailer</string>
-    <string name="movie_reviews">Reviews</string>
-    <string name="message_empty_movie_fragment">Please, choose a movie :)</string>
-    <string name="movie_videos">Trailers</string>
-    <string name="play_trailer_desc">Play trailer</string>
-    <string name="menu_share">Share</string>
-    <string name="share_template">Check out \'<xliff:g id="title">%1$s</xliff:g>\' at <xliff:g id="url">%2$s</xliff:g></string>
-    <string name="title_share_trailer">Share trailer</string>
-    <string name="message_movie_favored">Saved to favorites.</string>
-    <string name="sync_account_type">popularmovies.ewintory.com</string>
 
 </resources>

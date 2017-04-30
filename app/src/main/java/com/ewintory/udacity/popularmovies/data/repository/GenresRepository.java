@@ -16,24 +16,44 @@
 
 package com.ewintory.udacity.popularmovies.data.repository;
 
-import com.ewintory.udacity.popularmovies.data.model.Genre;
+import android.content.Context;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.ewintory.udacity.popularmovies.data.api.MoviesApi;
+import com.ewintory.udacity.popularmovies.data.model.Genre;
+import com.ewintory.udacity.popularmovies.data.repository.action.Action;
+import com.ewintory.udacity.popularmovies.data.repository.result.CollectionResult;
+import com.squareup.sqlbrite.BriteDatabase;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
- * A facade for which Fragments and Activities can use to
- * get the data needed to display without understanding
- * how the data is retrieved
- *
- * @see GenresRepositoryImpl
+ * @author Emin Yahyayev
  */
-public interface GenresRepository {
+public final class GenresRepository extends BaseRepository {
 
-    Observable<Map<Integer, Genre>> genres();
+    public GenresRepository(Context appContext, MoviesApi api, BriteDatabase database) {
+        super(appContext, api, database);
+    }
+
+    public Observable.Transformer<Action, CollectionResult<Genre>> genres() {
+        return actions -> actions.doOnNext(action -> Timber.d("genres > action: %s", action))
+                .flatMap(action -> api.genres()
+                        .map(response -> {
+                            if (response.isSuccessful()) {
+                                return CollectionResult.success(response.body().genres);
+                            } else {
+                                return CollectionResult.<Genre>failure(response.message());
+                            }
+                        })
+                        .onErrorReturn(t -> CollectionResult.failure(t.getMessage()))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .startWith(CollectionResult.inFlight()))
+                .doOnNext(result -> Timber.d("genres > result: %s", result));
+    }
 
 }

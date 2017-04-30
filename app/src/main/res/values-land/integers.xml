@@ -16,5 +16,5 @@
   -->
 
 <resources>
-    <integer name="movies_columns">3</integer>
+    <integer name="movies_columns">4</integer>
 </resources>

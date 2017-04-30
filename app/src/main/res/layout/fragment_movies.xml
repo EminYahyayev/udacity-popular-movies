@@ -14,8 +14,8 @@
   limitations under the License.
   -->
 
-<com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout
-    android:id="@+id/multi_swipe_refresh_layout"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_refresh_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,35 +23,25 @@
     android:layout_height="match_parent">
 
     <com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
-        android:id="@+id/movies_animator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inAnimation="@android:anim/fade_in"
-        android:outAnimation="@android:anim/fade_out">
+        android:id="@+id/view_animator"
+        style="@style/BetterViewAnimator">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/movies_recycler_view"
-            style="@style/CollectionView"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_movie" />
-
-        <include layout="@layout/partial_view_loading" />
-
-        <com.ewintory.udacity.popularmovies.ui.widget.AnimatorStateView
-            android:id="@+id/view_error"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:messageImage="@drawable/egg_error"
-            app:messageText="@string/view_error_message" />
+            android:clipToPadding="false"
+            android:padding="@dimen/item_spacing_half"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_movie"/>
 
         <com.ewintory.udacity.popularmovies.ui.widget.AnimatorStateView
-            android:id="@+id/view_empty"
+            android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:messageImage="@drawable/egg_empty"
-            app:messageText="@string/favored_empty_message" />
+            app:messageText="@string/movies_empty"/>
 
     </com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>
 
-</com.ewintory.udacity.popularmovies.ui.widget.MultiSwipeRefreshLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

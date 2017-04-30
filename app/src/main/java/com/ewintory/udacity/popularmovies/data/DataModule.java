@@ -1,78 +1,140 @@
-/*
- * Copyright 2015.  Emin Yahyayev
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.ewintory.udacity.popularmovies.data;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
-import com.ewintory.udacity.popularmovies.data.api.ApiModule;
-import com.ewintory.udacity.popularmovies.data.provider.ProviderModule;
-import com.ewintory.udacity.popularmovies.data.repository.RepositoryModule;
+import com.ewintory.udacity.popularmovies.BuildConfig;
+import com.ewintory.udacity.popularmovies.data.api.AuthenticationInterceptor;
+import com.ewintory.udacity.popularmovies.data.api.MoviesApi;
+import com.ewintory.udacity.popularmovies.data.db.MoviesDatabase;
+import com.ewintory.udacity.popularmovies.data.repository.GenresRepository;
+import com.ewintory.udacity.popularmovies.data.repository.MoviesRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
+import com.squareup.sqlbrite.BriteDatabase;
+import com.squareup.sqlbrite.SqlBrite;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-@Module(
-        includes = {
-                ApiModule.class,
-                ProviderModule.class,
-                RepositoryModule.class
-        },
-        injects = {
-                GlideSetup.class
-        },
-        complete = false,
-        library = true
-)
+/**
+ * Зависимости по работе c данными
+ *
+ * @author Emin Yahyayev
+ */
+@Module
 public final class DataModule {
-    public static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
+
+    private static final int DISK_CACHE_SIZE = 100 * 1024 * 1024; // 100MB
+    private static final int CONNECTION_TIMEOUT_SECONDS = 20;
+
+    public DataModule() {}
 
     @Provides
-    @Singleton Gson provideGson() {
+    @Singleton
+    SharedPreferences sharedPreferences(final Application application) {
+        return PreferenceManager.getDefaultSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    Gson gson() {
         return new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
+                .serializeNulls()
+                .registerTypeAdapterFactory(CustomAdapterFactory.create())
+                .setLenient()
                 .create();
     }
 
     @Provides
-    @Singleton OkHttpClient provideOkHttpClient(Application app) {
-        return createOkHttpClient(app);
+    @Singleton
+    Cache okHttpCache(final Application application) {
+        File cacheDir = new File(application.getCacheDir(), "http");
+        return new Cache(cacheDir, DISK_CACHE_SIZE);
     }
 
-    static OkHttpClient createOkHttpClient(Application app) {
-        OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, SECONDS);
-        client.setReadTimeout(10, SECONDS);
-        client.setWriteTimeout(10, SECONDS);
+    @Provides
+    @Singleton
+    OkHttpClient okHttpClient(final Cache cache) {
 
-        // Install an HTTP cache in the application cache directory.
-        File cacheDir = new File(app.getCacheDir(), "http");
-        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
-        client.setCache(cache);
+        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(BuildConfig.DEBUG
+                ? HttpLoggingInterceptor.Level.HEADERS
+                : HttpLoggingInterceptor.Level.NONE);
 
-        return client;
+        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        builder.readTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        builder.cache(cache);
+
+        builder.addInterceptor(logging);
+        builder.addInterceptor(new AuthenticationInterceptor(BuildConfig.MOVIE_DB_API_KEY));
+
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    MoviesApi moviesApi(Gson gson, OkHttpClient client) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(MoviesApi.BASE_URL)
+                .client(client)
+                .build();
+        return retrofit.create(MoviesApi.class);
+    }
+
+    @Provides
+    @Singleton
+    SQLiteOpenHelper openHelper(final Application application) {
+        return new MoviesDatabase(application);
+    }
+
+    @Provides
+    @Singleton
+    SqlBrite sqlBrite() {
+        return new SqlBrite.Builder()
+                .logger(message -> Timber.tag("Database").v(message))
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    BriteDatabase database(final SqlBrite sqlBrite, final SQLiteOpenHelper helper) {
+        final BriteDatabase db = sqlBrite.wrapDatabaseHelper(helper, Schedulers.io());
+        db.setLoggingEnabled(BuildConfig.DEBUG);
+        return db;
+    }
+
+    @Provides
+    @Singleton
+    GenresRepository genresRepository(final Application app,
+                                      final MoviesApi api,
+                                      final BriteDatabase database) {
+        return new GenresRepository(app, api, database);
+    }
+
+    @Provides
+    @Singleton
+    MoviesRepository moviesRepository(final Application app,
+                                      final MoviesApi api,
+                                      final BriteDatabase database) {
+        return new MoviesRepository(app, api, database);
     }
 }

@@ -18,6 +18,7 @@ package com.ewintory.udacity.popularmovies.ui.listener;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -32,16 +33,19 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int currentPage = 0;
     // The total number of items in the dataset after the last load
     private int previousTotalItemCount = 0;
-    // True if we are still waiting for the last set of data to load.
+    // True if we are still waiting for the last setItems of data to load.
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
+    protected boolean inverted;
 
     public interface OnLoadMoreCallback {
         void onLoadMore(int page, int totalItemsCount);
+
+        OnLoadMoreCallback DUMMY = (page, totalItemsCount) -> {/** dummy */};
     }
 
-    private OnLoadMoreCallback mCallback;
+    private OnLoadMoreCallback mCallback = OnLoadMoreCallback.DUMMY;
 
     public EndlessScrollListener() {}
 
@@ -53,6 +57,11 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         this.visibleThreshold = visibleThreshold;
         this.startingPageIndex = startPage;
         this.currentPage = startPage;
+    }
+
+    public EndlessScrollListener setInverted(boolean inverted) {
+        this.inverted = inverted;
+        return this;
     }
 
     public EndlessScrollListener setCallback(OnLoadMoreCallback callback) {
@@ -105,7 +114,33 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
 
         return new EndlessScrollListener(visibleThreshold, startPage) {
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy <= 0) return;
+                if (inverted) {
+                    if (dy >= 0) return;
+                } else {
+                    if (dy <= 0) return;
+                }
+
+                final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                final int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                final int totalItemCount = layoutManager.getItemCount();
+
+                onScrolled(firstVisibleItem, lastVisibleItem - firstVisibleItem, totalItemCount);
+            }
+        };
+    }
+
+    public static EndlessScrollListener fromLinearLayoutManager(
+            @NonNull final LinearLayoutManager layoutManager,
+            int visibleThreshold,
+            int startPage) {
+
+        return new EndlessScrollListener(visibleThreshold, startPage) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (inverted) {
+                    if (dy >= 0) return;
+                } else {
+                    if (dy <= 0) return;
+                }
 
                 final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
                 final int lastVisibleItem = layoutManager.findLastVisibleItemPosition();

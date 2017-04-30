@@ -73,7 +73,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
                 outRect.right = space / 2;
             }
         }
-        // set top to all in first lane
+        // setItems top to all in first lane
         if (position < spanCount && spanSize <= spanCount) {
             if (lastItemInFirstLane < 0) { // lay out at first time
                 lastItemInFirstLane = position + spanSize == spanCount ? position : lastItemInFirstLane;

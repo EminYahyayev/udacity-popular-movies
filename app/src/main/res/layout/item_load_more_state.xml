@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator
+    android:id="@+id/view_animator"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateFirstView="false">
+
+    <ImageButton
+        android:id="@+id/view_action"
+        style="?borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_refresh_white_48dp"
+        android:tint="@color/accent"/>
+
+    <ProgressBar
+        android:id="@+id/view_progress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/item_load_more_size"
+        android:layout_height="@dimen/item_load_more_size"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/padding_normal"
+        android:indeterminate="true"/>
+
+    <FrameLayout
+        android:id="@+id/view_none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</com.ewintory.udacity.popularmovies.ui.widget.BetterViewAnimator>

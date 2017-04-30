@@ -17,37 +17,63 @@
 package com.ewintory.udacity.popularmovies.data.repository;
 
 
+import android.content.Context;
+
+import com.ewintory.udacity.popularmovies.data.api.MoviesApi;
 import com.ewintory.udacity.popularmovies.data.api.Sort;
 import com.ewintory.udacity.popularmovies.data.model.Movie;
-import com.ewintory.udacity.popularmovies.data.model.Review;
-import com.ewintory.udacity.popularmovies.data.model.Video;
+import com.ewintory.udacity.popularmovies.data.repository.action.PageAction;
+import com.ewintory.udacity.popularmovies.data.repository.result.PageResult;
+import com.squareup.sqlbrite.BriteDatabase;
 
-import java.util.List;
-import java.util.Set;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-import rx.Observable;
+import rx.Observable.Transformer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
- * A facade for which Fragments and Activities can use to
- * get the data needed to display without understanding
- * how the data is retrieved
- *
- * @see MoviesRepositoryImpl
+ * @author Emin Yahyayev
  */
-public interface MoviesRepository {
+public final class MoviesRepository extends BaseRepository {
 
-    Observable<List<Movie>> discoverMovies(Sort sort, int page);
+    public static final int FIRST_PAGE = 1;
 
-    Observable<List<Movie>> savedMovies();
+    public MoviesRepository(Context appContext, MoviesApi api, BriteDatabase database) {
+        super(appContext, api, database);
+    }
 
-    Observable<Set<Long>> savedMovieIds();
-
-    void saveMovie(Movie movie);
-
-    void deleteMovie(Movie movie);
-
-    Observable<List<Video>> videos(long movieId);
-
-    Observable<List<Review>> reviews(long movieId);
+    public Transformer<PageAction, PageResult<Movie>> discover() {
+        return actions -> actions.doOnNext(action -> Timber.d("discover > action: %s", action))
+                .flatMap(action -> api.discoverMovies(Sort.POPULARITY, action.page)
+                        .map(response -> {
+                            if (response.isSuccessful()) {
+                                if (action.page > 2)
+                                    return PageResult.success(action.page, new ArrayList<Movie>());
+                                else
+                                    return PageResult.success(action.page, response.body().results);
+                            } else {
+                                Timber.e("Failed to load movies. Message: %s", response.message());
+                                return PageResult.<Movie>failure(action.page,
+                                        "Failed to load movies.\nTry again later.");
+                            }
+                        })
+                        .onErrorReturn(t -> {
+                            String errorMessage;
+                            if (t instanceof UnknownHostException) {
+                                errorMessage = "Failed to load movies.\nPlease check your network connection.";
+                            } else {
+                                Timber.e(t);
+                                errorMessage = "Failed to load movies.\nTry again later.";
+                            }
+                            return PageResult.failure(action.page, errorMessage);
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .startWith(PageResult.inFlight(action.page)))
+                .doOnNext(result -> Timber.d("discover > result: %s", result));
+    }
 
 }

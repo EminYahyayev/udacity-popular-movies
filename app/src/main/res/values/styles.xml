@@ -14,101 +14,19 @@
   limitations under the License.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <!-- Common -->
-    <style name="CollectionView">
-        <item name="android:padding">@dimen/item_spacing_half</item>
-        <item name="android:clipToPadding">false</item>
-        <item name="android:scrollbars">none</item>
+    <style name="BetterViewAnimator" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:animateFirstView">true</item>
+        <item name="android:inAnimation">@android:anim/fade_in</item>
+        <item name="android:outAnimation">@android:anim/fade_out</item>
     </style>
 
-    <!-- Browse movies -->
-
-    <style name="Widget.Movies.HeaderBar.Spinner.Base" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
-        <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
-        <item name="android:divider">@null</item>
-        <item name="android:dividerHeight">0dp</item>
-        <item name="android:overlapAnchor" tools:ignore="NewApi">true</item>
+    <style name="Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
-
-    <style name="Widget.Movies.HeaderBar.Spinner" parent="Widget.Movies.HeaderBar.Spinner.Base" />
-
-    <style name="MovieItem" parent="CardView">
-        <item name="android:layout_margin">@dimen/item_spacing_half</item>
-        <item name="android:clickable">true</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <!--<item name="cardPreventCornerOverlap">false</item>-->
-        <item name="cardElevation">4dp</item>
-    </style>
-
-    <style name="MovieItemFooter">
-        <item name="android:background">@color/theme_primary</item>
-    </style>
-
-    <style name="MovieItemText">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:lines">1</item>
-    </style>
-
-    <style name="FavoriteButton" parent="Widget.AppCompat.Light.ActionButton">
-        <item name="android:layout_height">@dimen/abc_action_button_min_height_material</item>
-        <item name="android:layout_width">@dimen/abc_action_button_min_height_material</item>
-        <item name="android:src">@drawable/selector_favorite_button</item>
-    </style>
-
-    <!-- Movie details -->
-    <style name="MovieDetailSectionHeader">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
-        <item name="android:textColor">@color/theme_primary</item>
-        <item name="android:paddingBottom">8dp</item>
-        <!--<item name="android:background">@drawable/movie_detail_section_separator</item>-->
-    </style>
-
-    <style name="MovieDetailTextBody">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/body_text_1</item>
-        <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:textAlignment" tools:ignore="NewApi">textStart</item>
-    </style>
-
-    <style name="MovieDetailPlayImage">
-        <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="MovieDetailAnchor">
-        <item name="android:layout_alignTop">@id/movie_cover_container</item>
-        <item name="android:layout_alignBottom">@id/movie_cover_container</item>
-    </style>
-
-    <!-- Toolbar -->
-
-    <style name="Toolbar">
-        <item name="android:background">?colorPrimary</item>
-    </style>
-
-    <style name="ActionBar.ThemeOverlay" parent="">
-        <item name="android:textColorPrimary">#fff</item>
-        <item name="colorControlNormal">#fff</item>
-        <item name="colorControlHighlight">#3fff</item>
-    </style>
-
-    <style name="ActionBar.PopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/body_text_white</item>
-        <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-
-    <style name="ActionBar.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
-        <item name="android:textColor">@color/body_text_white</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
 
 </resources>

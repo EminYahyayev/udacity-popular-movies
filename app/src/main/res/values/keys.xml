@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common -->
+    <string name="__leak_canary_display_activity_label" translatable="false">L.PopMovies</string>
+
+    <!-- Prefs -->
+    <string name="pref_adult_content" translatable="false">pref_adult_content</string>
+
+</resources>

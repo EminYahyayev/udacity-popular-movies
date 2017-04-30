@@ -1,0 +1,15 @@
+-- Genres
+
+CREATE TABLE genre (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+
+);
+
+select_all:
+SELECT * FROM genre
+ORDER BY name ASC;
+
+insertOrReplace:
+INSERT OR REPLACE INTO genre(id, name)
+VALUES (?1, ?2);

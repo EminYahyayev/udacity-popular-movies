@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import com.ewintory.udacity.popularmovies.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -37,8 +37,8 @@ import butterknife.ButterKnife;
  */
 public final class AnimatorStateView extends LinearLayout {
 
-    @Bind(R.id.message_view_text) TextView mTextView;
-    @Bind(R.id.message_view_image) ImageView mImageView;
+    @BindView(R.id.message_view_text) TextView mTextView;
+    @BindView(R.id.message_view_image) ImageView mImageView;
 
     private View mRoot;
 

@@ -20,8 +20,6 @@ package com.ewintory.udacity.popularmovies.utils;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.ewintory.udacity.popularmovies.data.model.Genre;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,16 +54,6 @@ public final class UiUtils {
             for (String str : strings) {
                 if (builder.length() > 0) builder.append(delimiter);
                 builder.append(str);
-            }
-        return builder.toString();
-    }
-
-    public static String joinGenres(List<Genre> genres, String delimiter, @NonNull StringBuilder builder) {
-        builder.setLength(0);
-        if (!Lists.isEmpty(genres))
-            for (Genre genre : genres) {
-                if (builder.length() > 0) builder.append(delimiter);
-                builder.append(genre.getName());
             }
         return builder.toString();
     }

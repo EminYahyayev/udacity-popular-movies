@@ -52,14 +52,18 @@
     <dimen name="movie_details_content_margin_bottom">0dp</dimen>
 
     <!-- Common -->
-    <dimen name="item_spacing_half">2dp</dimen>
-    <dimen name="item_spacing_full">4dp</dimen>
-    <dimen name="element_spacing_normal">8dp</dimen>
-    <dimen name="content_padding_normal">16dp</dimen>
+    <dimen name="item_spacing_half">4dp</dimen>
+    <dimen name="item_spacing_full">8dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="item_load_more_size">48dp</dimen>
     <dimen name="flexible_space_image_height">300dp</dimen>
     <item name="match_parent" type="dimen">-1</item>
     <item name="wrap_content" type="dimen">-2</item>
+
+    <dimen name="movies_filter_drawer_width">284dp</dimen>
 
 </resources>

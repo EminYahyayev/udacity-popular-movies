@@ -27,11 +27,11 @@
     <color name="body_text_1_inverse">#deffffff</color>
     <color name="body_text_2_inverse">#8affffff</color>
 
-    <color name="theme_primary">@color/material_red600</color>
-    <color name="theme_primary_dark">@color/material_red800</color>
-    <color name="theme_primary_light">@color/material_red300</color>
+    <color name="primary">@color/material_red600</color>
+    <color name="primary_dark">@color/material_red800</color>
+    <color name="primary_light">@color/material_red300</color>
 
-    <color name="theme_accent_1">@color/material_blueA700</color>
+    <color name="accent">@color/material_blueA700</color>
 
     <array name="swipe_progress_colors">
         <item>@color/material_blue500</item>
@@ -41,10 +41,16 @@
     <color name="window_background">#e9eaed</color>
     <color name="gray_background">#e4e4e4</color>
 
+    <color name="default_image_placeholder">@color/material_grey400</color>
+    <color name="default_image_error">@color/material_grey400</color>
+
+    <color name="movie_image_placeholder">@color/material_red100</color>
+    <color name="movie_image_error">@color/material_red300</color>
+
     <color name="movie_poster_placeholder">@color/material_red700</color>
     <color name="movie_cover_placeholder">@color/material_red700</color>
 
-    <color name="card_selectable_pressed">@color/theme_primary</color>
+    <color name="card_selectable_pressed">@color/primary</color>
     <color name="card_shape_background">#1e000000</color>
     <color name="list_dropdown_divider_color">#92a3a3a3</color>
     <color name="list_dropdown_foreground_normal">#ff333333</color>
